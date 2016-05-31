@@ -9,12 +9,12 @@ package Visual;
  *
  * @author Leovavi
  */
-public class LogIn extends javax.swing.JPanel {
+public class CreatePlayer extends javax.swing.JPanel {
 
     /**
-     * Creates new form IniciarSesion
+     * Creates new form CreateUser
      */
-    public LogIn() {
+    public CreatePlayer() {
         initComponents();
     }
 
@@ -27,37 +27,14 @@ public class LogIn extends javax.swing.JPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        btnLogIn = new javax.swing.JButton();
-        btnBack = new javax.swing.JButton();
         userTF = new javax.swing.JTextField();
         passTF = new javax.swing.JTextField();
         UserFormLabel = new javax.swing.JLabel();
+        btnCreatePlayer = new javax.swing.JButton();
+        btnBack = new javax.swing.JButton();
         MainLabel = new javax.swing.JLabel();
 
-        setPreferredSize(new java.awt.Dimension(550, 500));
         setLayout(null);
-
-        btnLogIn.setFont(new java.awt.Font("Chinese Takeaway", 3, 11)); // NOI18N
-        btnLogIn.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/minilogin.png"))); // NOI18N
-        btnLogIn.setBorder(null);
-        btnLogIn.setBorderPainted(false);
-        btnLogIn.setOpaque(false);
-        btnLogIn.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnLogInActionPerformed(evt);
-            }
-        });
-        add(btnLogIn);
-        btnLogIn.setBounds(480, 510, 200, 40);
-
-        btnBack.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/back.png"))); // NOI18N
-        btnBack.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnBackActionPerformed(evt);
-            }
-        });
-        add(btnBack);
-        btnBack.setBounds(933, 603, 200, 40);
 
         userTF.setFont(new java.awt.Font("Chinese Takeaway", 2, 18)); // NOI18N
         userTF.setBorder(null);
@@ -73,15 +50,32 @@ public class LogIn extends javax.swing.JPanel {
         add(UserFormLabel);
         UserFormLabel.setBounds(430, 240, 310, 260);
 
+        btnCreatePlayer.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/miniCreatePlayer.png"))); // NOI18N
+        btnCreatePlayer.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCreatePlayerActionPerformed(evt);
+            }
+        });
+        add(btnCreatePlayer);
+        btnCreatePlayer.setBounds(480, 510, 200, 40);
+
+        btnBack.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/back.png"))); // NOI18N
+        btnBack.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnBackActionPerformed(evt);
+            }
+        });
+        add(btnBack);
+        btnBack.setBounds(933, 603, 200, 40);
+
         MainLabel.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/MainBackground.png"))); // NOI18N
-        MainLabel.setText("jLabel2");
         add(MainLabel);
         MainLabel.setBounds(0, 0, 1150, 650);
     }// </editor-fold>//GEN-END:initComponents
 
-    private void btnLogInActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLogInActionPerformed
+    private void btnCreatePlayerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCreatePlayerActionPerformed
         Menu.menu.setPanel(new MenuInicio());
-    }//GEN-LAST:event_btnLogInActionPerformed
+    }//GEN-LAST:event_btnCreatePlayerActionPerformed
 
     private void btnBackActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBackActionPerformed
         Menu.menu.setPanel(new MenuInicio());
@@ -92,7 +86,7 @@ public class LogIn extends javax.swing.JPanel {
     private javax.swing.JLabel MainLabel;
     private javax.swing.JLabel UserFormLabel;
     private javax.swing.JButton btnBack;
-    private javax.swing.JButton btnLogIn;
+    private javax.swing.JButton btnCreatePlayer;
     private javax.swing.JTextField passTF;
     private javax.swing.JTextField userTF;
     // End of variables declaration//GEN-END:variables
