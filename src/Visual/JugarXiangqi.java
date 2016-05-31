@@ -9,12 +9,12 @@ package Visual;
  *
  * @author Leovavi
  */
-public class CreatePlayer extends javax.swing.JPanel {
+public class JugarXiangqi extends javax.swing.JPanel {
 
     /**
-     * Creates new form CreateUser
+     * Creates new form JugarXiangqi
      */
-    public CreatePlayer() {
+    public JugarXiangqi() {
         initComponents();
     }
 
@@ -27,37 +27,25 @@ public class CreatePlayer extends javax.swing.JPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        userTF = new javax.swing.JTextField();
-        passTF = new javax.swing.JTextField();
-        UserFormLabel = new javax.swing.JLabel();
-        btnCreatePlayer = new javax.swing.JButton();
+        btnNuevaPartida = new javax.swing.JButton();
+        btnCargarPartida = new javax.swing.JButton();
+        btnEliminarPartida = new javax.swing.JButton();
         btnBack = new javax.swing.JButton();
         MainLabel = new javax.swing.JLabel();
 
         setLayout(null);
 
-        userTF.setFont(new java.awt.Font("Chinese Takeaway", 2, 18)); // NOI18N
-        userTF.setBorder(null);
-        add(userTF);
-        userTF.setBounds(450, 320, 260, 40);
+        btnNuevaPartida.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/nuevo.png"))); // NOI18N
+        add(btnNuevaPartida);
+        btnNuevaPartida.setBounds(430, 290, 300, 60);
 
-        passTF.setFont(new java.awt.Font("Chinese Takeaway", 2, 18)); // NOI18N
-        passTF.setBorder(null);
-        add(passTF);
-        passTF.setBounds(450, 430, 260, 30);
+        btnCargarPartida.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/cargar.png"))); // NOI18N
+        add(btnCargarPartida);
+        btnCargarPartida.setBounds(430, 390, 300, 60);
 
-        UserFormLabel.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/userForm.png"))); // NOI18N
-        add(UserFormLabel);
-        UserFormLabel.setBounds(430, 240, 310, 260);
-
-        btnCreatePlayer.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/miniCreatePlayer.png"))); // NOI18N
-        btnCreatePlayer.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnCreatePlayerActionPerformed(evt);
-            }
-        });
-        add(btnCreatePlayer);
-        btnCreatePlayer.setBounds(480, 510, 200, 40);
+        btnEliminarPartida.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/eliminar.png"))); // NOI18N
+        add(btnEliminarPartida);
+        btnEliminarPartida.setBounds(430, 490, 300, 60);
 
         btnBack.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/back.png"))); // NOI18N
         btnBack.addActionListener(new java.awt.event.ActionListener() {
@@ -73,21 +61,16 @@ public class CreatePlayer extends javax.swing.JPanel {
         MainLabel.setBounds(0, 0, 1150, 650);
     }// </editor-fold>//GEN-END:initComponents
 
-    private void btnCreatePlayerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCreatePlayerActionPerformed
-        Menu.menu.setPanel(new MenuInicio());
-    }//GEN-LAST:event_btnCreatePlayerActionPerformed
-
     private void btnBackActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBackActionPerformed
-        Menu.menu.setPanel(new MenuInicio());
+        Menu.menu.setPanel(new MenuPrincipal());
     }//GEN-LAST:event_btnBackActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel MainLabel;
-    private javax.swing.JLabel UserFormLabel;
     private javax.swing.JButton btnBack;
-    private javax.swing.JButton btnCreatePlayer;
-    private javax.swing.JTextField passTF;
-    private javax.swing.JTextField userTF;
+    private javax.swing.JButton btnCargarPartida;
+    private javax.swing.JButton btnEliminarPartida;
+    private javax.swing.JButton btnNuevaPartida;
     // End of variables declaration//GEN-END:variables
 }

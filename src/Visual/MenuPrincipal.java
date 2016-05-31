@@ -27,17 +27,59 @@ public class MenuPrincipal extends javax.swing.JPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        btnJugar = new javax.swing.JButton();
+        btnCuenta = new javax.swing.JButton();
+        btnReportes = new javax.swing.JButton();
+        btnLogOut = new javax.swing.JButton();
         MainLabel = new javax.swing.JLabel();
 
         setLayout(null);
+
+        btnJugar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/jugar.png"))); // NOI18N
+        btnJugar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnJugarActionPerformed(evt);
+            }
+        });
+        add(btnJugar);
+        btnJugar.setBounds(430, 290, 300, 60);
+
+        btnCuenta.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/cuenta.png"))); // NOI18N
+        add(btnCuenta);
+        btnCuenta.setBounds(430, 390, 300, 60);
+
+        btnReportes.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/reportes.png"))); // NOI18N
+        add(btnReportes);
+        btnReportes.setBounds(430, 490, 300, 60);
+
+        btnLogOut.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/logout.png"))); // NOI18N
+        btnLogOut.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnLogOutActionPerformed(evt);
+            }
+        });
+        add(btnLogOut);
+        btnLogOut.setBounds(933, 603, 200, 40);
 
         MainLabel.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/MainBackground.png"))); // NOI18N
         add(MainLabel);
         MainLabel.setBounds(0, 0, 1150, 650);
     }// </editor-fold>//GEN-END:initComponents
 
+    private void btnLogOutActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLogOutActionPerformed
+        Menu.menu.setPanel(new MenuInicio());
+    }//GEN-LAST:event_btnLogOutActionPerformed
+
+    private void btnJugarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnJugarActionPerformed
+        Menu.menu.setPanel(new JugarXiangqi());
+    }//GEN-LAST:event_btnJugarActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel MainLabel;
+    private javax.swing.JButton btnCuenta;
+    private javax.swing.JButton btnJugar;
+    private javax.swing.JButton btnLogOut;
+    private javax.swing.JButton btnReportes;
     // End of variables declaration//GEN-END:variables
 }

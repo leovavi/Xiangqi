@@ -22,38 +22,17 @@ public class MenuInicio extends javax.swing.JPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        login = new javax.swing.JButton();
-        cratePlayer = new javax.swing.JButton();
         exit = new javax.swing.JButton();
+        userTF = new javax.swing.JTextField();
+        passTF = new javax.swing.JTextField();
+        LabelUserForm = new javax.swing.JLabel();
+        btnLogIn = new javax.swing.JButton();
+        btnCreatePlayer = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
 
         setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
         setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         setLayout(null);
-
-        login.setFont(new java.awt.Font("Chinese Takeaway", 2, 36)); // NOI18N
-        login.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/login.png"))); // NOI18N
-        login.setBorder(javax.swing.BorderFactory.createCompoundBorder());
-        login.setOpaque(false);
-        login.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                loginActionPerformed(evt);
-            }
-        });
-        add(login);
-        login.setBounds(440, 320, 300, 60);
-
-        cratePlayer.setFont(new java.awt.Font("Chinese Takeaway", 2, 36)); // NOI18N
-        cratePlayer.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/createPlayer.png"))); // NOI18N
-        cratePlayer.setBorder(javax.swing.BorderFactory.createCompoundBorder());
-        cratePlayer.setOpaque(false);
-        cratePlayer.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                cratePlayerActionPerformed(evt);
-            }
-        });
-        add(cratePlayer);
-        cratePlayer.setBounds(440, 420, 300, 63);
 
         exit.setFont(new java.awt.Font("Chinese Takeaway", 2, 36)); // NOI18N
         exit.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/exit.png"))); // NOI18N
@@ -65,7 +44,39 @@ public class MenuInicio extends javax.swing.JPanel {
             }
         });
         add(exit);
-        exit.setBounds(440, 520, 300, 60);
+        exit.setBounds(933, 603, 200, 40);
+
+        userTF.setFont(new java.awt.Font("Chinese Takeaway", 2, 18)); // NOI18N
+        userTF.setBorder(null);
+        add(userTF);
+        userTF.setBounds(450, 310, 260, 40);
+
+        passTF.setFont(new java.awt.Font("Chinese Takeaway", 2, 18)); // NOI18N
+        passTF.setBorder(null);
+        add(passTF);
+        passTF.setBounds(450, 420, 260, 30);
+
+        LabelUserForm.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/userForm.png"))); // NOI18N
+        add(LabelUserForm);
+        LabelUserForm.setBounds(430, 240, 310, 240);
+
+        btnLogIn.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/minilogin.png"))); // NOI18N
+        btnLogIn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnLogInActionPerformed(evt);
+            }
+        });
+        add(btnLogIn);
+        btnLogIn.setBounds(380, 490, 200, 40);
+
+        btnCreatePlayer.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/miniCreatePlayer.png"))); // NOI18N
+        btnCreatePlayer.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCreatePlayerActionPerformed(evt);
+            }
+        });
+        add(btnCreatePlayer);
+        btnCreatePlayer.setBounds(590, 490, 200, 40);
 
         jLabel1.setBackground(new java.awt.Color(0, 153, 153));
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/MainBackground.png"))); // NOI18N
@@ -74,23 +85,26 @@ public class MenuInicio extends javax.swing.JPanel {
         jLabel1.setBounds(0, 0, 1150, 650);
     }// </editor-fold>//GEN-END:initComponents
 
-    private void loginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_loginActionPerformed
-       Menu.menu.setPanel(new LogIn());
-    }//GEN-LAST:event_loginActionPerformed
-
     private void exitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_exitActionPerformed
         System.exit(0);
     }//GEN-LAST:event_exitActionPerformed
 
-    private void cratePlayerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cratePlayerActionPerformed
-        Menu.menu.setPanel(new CreatePlayer());
-    }//GEN-LAST:event_cratePlayerActionPerformed
+    private void btnLogInActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLogInActionPerformed
+        Menu.menu.setPanel(new MenuPrincipal());
+    }//GEN-LAST:event_btnLogInActionPerformed
+
+    private void btnCreatePlayerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCreatePlayerActionPerformed
+        Menu.menu.setPanel(new MenuPrincipal());
+    }//GEN-LAST:event_btnCreatePlayerActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton cratePlayer;
+    private javax.swing.JLabel LabelUserForm;
+    private javax.swing.JButton btnCreatePlayer;
+    private javax.swing.JButton btnLogIn;
     private javax.swing.JButton exit;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JButton login;
+    private javax.swing.JTextField passTF;
+    private javax.swing.JTextField userTF;
     // End of variables declaration//GEN-END:variables
 }
