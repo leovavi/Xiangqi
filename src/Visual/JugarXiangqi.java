@@ -36,14 +36,29 @@ public class JugarXiangqi extends javax.swing.JPanel {
         setLayout(null);
 
         btnNuevaPartida.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/nuevo.png"))); // NOI18N
+        btnNuevaPartida.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnNuevaPartidaActionPerformed(evt);
+            }
+        });
         add(btnNuevaPartida);
         btnNuevaPartida.setBounds(430, 290, 300, 60);
 
         btnCargarPartida.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/cargar.png"))); // NOI18N
+        btnCargarPartida.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCargarPartidaActionPerformed(evt);
+            }
+        });
         add(btnCargarPartida);
         btnCargarPartida.setBounds(430, 390, 300, 60);
 
         btnEliminarPartida.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/eliminar.png"))); // NOI18N
+        btnEliminarPartida.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnEliminarPartidaActionPerformed(evt);
+            }
+        });
         add(btnEliminarPartida);
         btnEliminarPartida.setBounds(430, 490, 300, 60);
 
@@ -64,6 +79,18 @@ public class JugarXiangqi extends javax.swing.JPanel {
     private void btnBackActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBackActionPerformed
         Menu.menu.setPanel(new MenuPrincipal());
     }//GEN-LAST:event_btnBackActionPerformed
+
+    private void btnNuevaPartidaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNuevaPartidaActionPerformed
+        Menu.menu.setPanel(new PlayersAvailable());
+    }//GEN-LAST:event_btnNuevaPartidaActionPerformed
+
+    private void btnCargarPartidaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCargarPartidaActionPerformed
+        Menu.menu.setPanel(new LoadGame());
+    }//GEN-LAST:event_btnCargarPartidaActionPerformed
+
+    private void btnEliminarPartidaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarPartidaActionPerformed
+        Menu.menu.setPanel(new DeleteGame());
+    }//GEN-LAST:event_btnEliminarPartidaActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

@@ -1,6 +1,7 @@
 package Visual;
 
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
 
@@ -26,10 +27,8 @@ public class Menu extends JFrame {
         panelPrincipal = new javax.swing.JPanel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setLocation(new java.awt.Point(50, 50));
+        setLocation(new java.awt.Point(30, 30));
         setMinimumSize(new java.awt.Dimension(1150, 650));
-        setUndecorated(true);
-        setPreferredSize(new java.awt.Dimension(1150, 650));
         setResizable(false);
 
         panelPrincipal.setPreferredSize(new java.awt.Dimension(0, 0));
@@ -39,11 +38,11 @@ public class Menu extends JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(panelPrincipal, javax.swing.GroupLayout.DEFAULT_SIZE, 1150, Short.MAX_VALUE)
+            .addComponent(panelPrincipal, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 1150, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(panelPrincipal, javax.swing.GroupLayout.DEFAULT_SIZE, 650, Short.MAX_VALUE)
+            .addComponent(panelPrincipal, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 650, Short.MAX_VALUE)
         );
 
         pack();
@@ -58,6 +57,10 @@ public class Menu extends JFrame {
         panelPrincipal.add(panel);
         panelPrincipal.repaint();
         panelPrincipal.revalidate();
+    }
+    
+    public void showMessage(String message){
+        JOptionPane.showMessageDialog(menu, message, "Information", 2);
     }
     
     public static void main(String args[]) {

@@ -24,11 +24,11 @@ public class MenuInicio extends javax.swing.JPanel {
 
         exit = new javax.swing.JButton();
         userTF = new javax.swing.JTextField();
-        passTF = new javax.swing.JTextField();
-        LabelUserForm = new javax.swing.JLabel();
         btnLogIn = new javax.swing.JButton();
         btnCreatePlayer = new javax.swing.JButton();
-        jLabel1 = new javax.swing.JLabel();
+        passTF = new javax.swing.JPasswordField();
+        LabelUserForm = new javax.swing.JLabel();
+        MainLabel = new javax.swing.JLabel();
 
         setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
         setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
@@ -51,15 +51,6 @@ public class MenuInicio extends javax.swing.JPanel {
         add(userTF);
         userTF.setBounds(450, 310, 260, 40);
 
-        passTF.setFont(new java.awt.Font("Chinese Takeaway", 2, 18)); // NOI18N
-        passTF.setBorder(null);
-        add(passTF);
-        passTF.setBounds(450, 420, 260, 30);
-
-        LabelUserForm.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/userForm.png"))); // NOI18N
-        add(LabelUserForm);
-        LabelUserForm.setBounds(430, 240, 310, 240);
-
         btnLogIn.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/minilogin.png"))); // NOI18N
         btnLogIn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -78,11 +69,20 @@ public class MenuInicio extends javax.swing.JPanel {
         add(btnCreatePlayer);
         btnCreatePlayer.setBounds(590, 490, 200, 40);
 
-        jLabel1.setBackground(new java.awt.Color(0, 153, 153));
-        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/MainBackground.png"))); // NOI18N
-        jLabel1.setText("jLabel1");
-        add(jLabel1);
-        jLabel1.setBounds(0, 0, 1150, 650);
+        passTF.setFont(new java.awt.Font("Comic Sans MS", 2, 18)); // NOI18N
+        passTF.setBorder(null);
+        add(passTF);
+        passTF.setBounds(450, 420, 260, 30);
+
+        LabelUserForm.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/userForm.png"))); // NOI18N
+        add(LabelUserForm);
+        LabelUserForm.setBounds(430, 240, 310, 240);
+
+        MainLabel.setBackground(new java.awt.Color(0, 153, 153));
+        MainLabel.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/MainBackground.png"))); // NOI18N
+        MainLabel.setText("jLabel1");
+        add(MainLabel);
+        MainLabel.setBounds(0, 0, 1150, 650);
     }// </editor-fold>//GEN-END:initComponents
 
     private void exitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_exitActionPerformed
@@ -100,11 +100,11 @@ public class MenuInicio extends javax.swing.JPanel {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel LabelUserForm;
+    private javax.swing.JLabel MainLabel;
     private javax.swing.JButton btnCreatePlayer;
     private javax.swing.JButton btnLogIn;
     private javax.swing.JButton exit;
-    private javax.swing.JLabel jLabel1;
-    private javax.swing.JTextField passTF;
+    private javax.swing.JPasswordField passTF;
     private javax.swing.JTextField userTF;
     // End of variables declaration//GEN-END:variables
 }

@@ -45,10 +45,20 @@ public class MenuPrincipal extends javax.swing.JPanel {
         btnJugar.setBounds(430, 290, 300, 60);
 
         btnCuenta.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/cuenta.png"))); // NOI18N
+        btnCuenta.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCuentaActionPerformed(evt);
+            }
+        });
         add(btnCuenta);
         btnCuenta.setBounds(430, 390, 300, 60);
 
         btnReportes.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/reportes.png"))); // NOI18N
+        btnReportes.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnReportesActionPerformed(evt);
+            }
+        });
         add(btnReportes);
         btnReportes.setBounds(430, 490, 300, 60);
 
@@ -73,6 +83,14 @@ public class MenuPrincipal extends javax.swing.JPanel {
     private void btnJugarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnJugarActionPerformed
         Menu.menu.setPanel(new JugarXiangqi());
     }//GEN-LAST:event_btnJugarActionPerformed
+
+    private void btnCuentaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCuentaActionPerformed
+        Menu.menu.setPanel(new MiCuenta());
+    }//GEN-LAST:event_btnCuentaActionPerformed
+
+    private void btnReportesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnReportesActionPerformed
+        Menu.menu.setPanel(new Reportes());
+    }//GEN-LAST:event_btnReportesActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
