@@ -1,5 +1,9 @@
 package Visual;
 
+import Errores.PasswordLengthException;
+import Errores.UserAlreadyExistsException;
+import Xiangqi.Login;
+import Xiangqi.UserList;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
@@ -90,11 +94,36 @@ public class MenuInicio extends javax.swing.JPanel {
     }//GEN-LAST:event_exitActionPerformed
 
     private void btnLogInActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLogInActionPerformed
-        Menu.menu.setPanel(new MenuPrincipal());
+        String user = userTF.getText();
+        String pass = passTF.getText();
+        try{
+            Login log = Menu.menu.ul.searchUser(user);
+            if(log.getPass().equals(pass)){
+                Menu.userLogged = log;
+                Menu.menu.setPanel(new MenuPrincipal());
+            }else
+                Menu.menu.showMessage("Invalid Password");
+        }catch(UserAlreadyExistsException e){
+            Menu.menu.showMessage(e.getMessage());
+        }catch(NullPointerException e){
+            Menu.menu.showMessage("User "+user+" Not Found");
+        }
     }//GEN-LAST:event_btnLogInActionPerformed
 
     private void btnCreatePlayerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCreatePlayerActionPerformed
-        Menu.menu.setPanel(new MenuPrincipal());
+        String user = userTF.getText();
+        String pass = String.valueOf(passTF.getPassword());
+        try{
+            Menu.ul.saveUser(user, pass);
+            Menu.menu.showMessage("User Created!");
+            Login log = Menu.ul.searchUser(user);
+            if(log!=null){
+                Menu.userLogged = log;
+                Menu.menu.setPanel(new MenuPrincipal());
+            }
+        }catch(PasswordLengthException | UserAlreadyExistsException e){
+            Menu.menu.showMessage(e.getMessage());
+        }
     }//GEN-LAST:event_btnCreatePlayerActionPerformed
 
 

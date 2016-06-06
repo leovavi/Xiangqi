@@ -5,17 +5,26 @@
  */
 package Visual;
 
+import Errores.UserAlreadyExistsException;
+import Xiangqi.Login;
+import javax.swing.DefaultListModel;
+
 /**
  *
  * @author Leovavi
  */
 public class PlayersAvailable extends javax.swing.JPanel {
-
+    static PlayersAvailable pa = new PlayersAvailable();
+    DefaultListModel dlm = new DefaultListModel();
     /**
      * Creates new form PlayersAvailable
      */
     public PlayersAvailable() {
         initComponents();
+        for(Login p : Menu.menu.ul.users)
+            if(!p.getUser().equals(Menu.userLogged.getUser()))
+                dlm.addElement(p.getUser());
+        playersList.setModel(dlm);
     }
 
     /**
@@ -46,6 +55,11 @@ public class PlayersAvailable extends javax.swing.JPanel {
             public int getSize() { return strings.length; }
             public String getElementAt(int i) { return strings[i]; }
         });
+        playersList.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                playersListMouseClicked(evt);
+            }
+        });
         jScrollPane1.setViewportView(playersList);
 
         add(jScrollPane1);
@@ -68,6 +82,15 @@ public class PlayersAvailable extends javax.swing.JPanel {
     private void btnBackActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBackActionPerformed
         Menu.menu.setPanel(new JugarXiangqi());
     }//GEN-LAST:event_btnBackActionPerformed
+
+    private void playersListMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_playersListMouseClicked
+        try{
+            Menu.userLogged2 = Menu.ul.searchUser(playersList.getSelectedValue());
+            Menu.menu.setPanel(new Game());
+        }catch(UserAlreadyExistsException e){
+            System.out.println("No pasa");
+        }
+    }//GEN-LAST:event_playersListMouseClicked
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

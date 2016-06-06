@@ -1,9 +1,23 @@
 package Fichas;
 
 public abstract class Ficha {
-    public abstract void move();
+    int turno;
+    String name;
     
-    public boolean validarMove(){
-        return true;
+    public Ficha(String name){
+        turno = 1;
+        this.name = name;
     }
+    
+    public String getName(){
+        return name;
+    }
+    
+    public int getTurno(){
+        return turno;
+    }
+    
+    public abstract void move();
+    public abstract boolean validarMove();
+    public abstract String icon();
 }

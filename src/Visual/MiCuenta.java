@@ -5,17 +5,21 @@
  */
 package Visual;
 
+import Errores.PasswordLengthException;
+import javax.swing.JOptionPane;
+
 /**
  *
  * @author Leovavi
  */
 public class MiCuenta extends javax.swing.JPanel {
-
     /**
      * Creates new form MiCuenta
      */
     public MiCuenta() {
         initComponents();
+        userLabel.setText("Username: "+Menu.menu.userLogged.getUser());
+        fechaLabel.setText("Fecha Creado: "+Menu.menu.userLogged.getDate());
     }
 
     /**
@@ -34,12 +38,17 @@ public class MiCuenta extends javax.swing.JPanel {
         btnBack = new javax.swing.JButton();
         userLabel = new javax.swing.JLabel();
         puntosLabel = new javax.swing.JLabel();
-        jLabel1 = new javax.swing.JLabel();
+        fechaLabel = new javax.swing.JLabel();
         MainLabel = new javax.swing.JLabel();
 
         setLayout(null);
 
         btnChangePassword.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/changePass.png"))); // NOI18N
+        btnChangePassword.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnChangePasswordActionPerformed(evt);
+            }
+        });
         add(btnChangePassword);
         btnChangePassword.setBounds(370, 430, 200, 40);
 
@@ -59,9 +68,14 @@ public class MiCuenta extends javax.swing.JPanel {
             }
         });
         add(btnConnectFacebook);
-        btnConnectFacebook.setBounds(620, 490, 200, 40);
+        btnConnectFacebook.setBounds(600, 490, 200, 40);
 
         btnDeleteAccount.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/eliminarCuenta.png"))); // NOI18N
+        btnDeleteAccount.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnDeleteAccountActionPerformed(evt);
+            }
+        });
         add(btnDeleteAccount);
         btnDeleteAccount.setBounds(600, 430, 200, 40);
 
@@ -84,10 +98,10 @@ public class MiCuenta extends javax.swing.JPanel {
         add(puntosLabel);
         puntosLabel.setBounds(440, 330, 280, 30);
 
-        jLabel1.setFont(new java.awt.Font("Chinese Takeaway", 2, 18)); // NOI18N
-        jLabel1.setText("Fecha Creado: Fecha");
-        add(jLabel1);
-        jLabel1.setBounds(440, 370, 280, 30);
+        fechaLabel.setFont(new java.awt.Font("Chinese Takeaway", 2, 18)); // NOI18N
+        fechaLabel.setText("Fecha Creado: Fecha");
+        add(fechaLabel);
+        fechaLabel.setBounds(360, 370, 460, 30);
 
         MainLabel.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/MainBackground.png"))); // NOI18N
         add(MainLabel);
@@ -106,6 +120,18 @@ public class MiCuenta extends javax.swing.JPanel {
         Menu.menu.showMessage("PROXIMAMENTE ESTARA DISPONIBLE");
     }//GEN-LAST:event_btnConnectFacebookActionPerformed
 
+    private void btnDeleteAccountActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeleteAccountActionPerformed
+        Menu.menu.showMessage("PROXIMAMENTE ESTARÄ DISPONIBLE");
+    }//GEN-LAST:event_btnDeleteAccountActionPerformed
+
+    private void btnChangePasswordActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnChangePasswordActionPerformed
+        try{
+            Menu.menu.userLogged.setPass(JOptionPane.showInputDialog(Menu.menu, "New Password: "));
+        }catch(PasswordLengthException e){
+            Menu.menu.showMessage(e.getMessage());
+        }
+    }//GEN-LAST:event_btnChangePasswordActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel MainLabel;
@@ -114,7 +140,7 @@ public class MiCuenta extends javax.swing.JPanel {
     private javax.swing.JButton btnConnectFacebook;
     private javax.swing.JButton btnConnectTwitter;
     private javax.swing.JButton btnDeleteAccount;
-    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel fechaLabel;
     private javax.swing.JLabel puntosLabel;
     private javax.swing.JLabel userLabel;
     // End of variables declaration//GEN-END:variables

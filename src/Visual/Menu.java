@@ -1,12 +1,17 @@
 package Visual;
 
+import Xiangqi.Login;
+import Xiangqi.UserList;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
 
 public class Menu extends JFrame {
-    static Menu menu = new Menu();
+    public static Menu menu = new Menu();
+    static UserList ul = new UserList();
+    static Login userLogged, userLogged2;
+    
     /**
      * Creates new form Menu
      */
@@ -60,7 +65,7 @@ public class Menu extends JFrame {
     }
     
     public void showMessage(String message){
-        JOptionPane.showMessageDialog(menu, message, "Information", 2);
+        JOptionPane.showMessageDialog(menu, message, "Information", JOptionPane.INFORMATION_MESSAGE);
     }
     
     public static void main(String args[]) {

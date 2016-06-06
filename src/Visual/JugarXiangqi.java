@@ -5,6 +5,8 @@
  */
 package Visual;
 
+import java.util.NoSuchElementException;
+
 /**
  *
  * @author Leovavi
@@ -81,15 +83,22 @@ public class JugarXiangqi extends javax.swing.JPanel {
     }//GEN-LAST:event_btnBackActionPerformed
 
     private void btnNuevaPartidaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNuevaPartidaActionPerformed
-        Menu.menu.setPanel(new PlayersAvailable());
+        try{
+            if(PlayersAvailable.pa.dlm.firstElement()!=null);
+                Menu.menu.setPanel(new PlayersAvailable());
+        }catch(NullPointerException | NoSuchElementException e){
+            Menu.menu.showMessage("No Players Available");
+        }
     }//GEN-LAST:event_btnNuevaPartidaActionPerformed
 
     private void btnCargarPartidaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCargarPartidaActionPerformed
-        Menu.menu.setPanel(new LoadGame());
+        Menu.menu.showMessage("PROXIMAMENTE ESTARA DISPONIBLE");
+        //Menu.menu.setPanel(new LoadGame());
     }//GEN-LAST:event_btnCargarPartidaActionPerformed
 
     private void btnEliminarPartidaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarPartidaActionPerformed
-        Menu.menu.setPanel(new DeleteGame());
+        Menu.menu.showMessage("PROXIMAMENTE ESTARA DISPONIBLE");
+        //Menu.menu.setPanel(new DeleteGame());
     }//GEN-LAST:event_btnEliminarPartidaActionPerformed
 
 
