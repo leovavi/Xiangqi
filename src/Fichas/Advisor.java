@@ -5,16 +5,11 @@
  */
 package Fichas;
 
-import javax.swing.ImageIcon;
-import javax.swing.JLabel;
-
 /**
  *
  * @author Leovavi
  */
-public final class Advisor extends Ficha{
-    JLabel advisor = new JLabel();
-    
+public final class Advisor extends Ficha{    
     public Advisor(String name){
         super(name);
     }
@@ -31,6 +26,8 @@ public final class Advisor extends Ficha{
 
     @Override
     public String icon(){
-        return "/Imagenes/Fichas/Advisor.png";
+        if(turno == 1)
+            return "/Imagenes/Fichas/AdvisorR.png";
+        return "/Imagenes/Fichas/AdvisorB.png";
     }
 }

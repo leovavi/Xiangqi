@@ -50,11 +50,8 @@ public class PlayersAvailable extends javax.swing.JPanel {
         add(PlayersLabel);
         PlayersLabel.setBounds(470, 260, 220, 40);
 
-        playersList.setModel(new javax.swing.AbstractListModel<String>() {
-            String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
-            public int getSize() { return strings.length; }
-            public String getElementAt(int i) { return strings[i]; }
-        });
+        playersList.setFont(new java.awt.Font("Chinese Takeaway", 2, 14)); // NOI18N
+        playersList.setModel(new DefaultListModel());
         playersList.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 playersListMouseClicked(evt);
