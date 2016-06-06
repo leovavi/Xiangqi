@@ -5,10 +5,32 @@
  */
 package Fichas;
 
+import javax.swing.ImageIcon;
+import javax.swing.JLabel;
+
 /**
  *
  * @author Leovavi
  */
-public class Advisor {
+public final class Advisor extends Ficha{
+    JLabel advisor = new JLabel();
     
+    public Advisor(String name){
+        super(name);
+    }
+    
+    @Override
+    public void move() {
+        
+    }
+
+    @Override
+    public boolean validarMove() {
+        return true;
+    }
+
+    @Override
+    public String icon(){
+        return "/Imagenes/Fichas/Advisor.png";
+    }
 }
