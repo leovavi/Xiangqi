@@ -9,6 +9,25 @@ package Fichas;
  *
  * @author Leovavi
  */
-public class Horse {
-    
+public class Horse extends Ficha{
+    public Horse(String name){
+        super(name);
+    }
+
+    @Override
+    public void move() {
+
+    }
+
+    @Override
+    public boolean validarMove() {
+        return true;
+    }
+
+    @Override
+    public String icon() {
+        if(turno == 1)
+            return "/Imagenes/Fichas/HorseR.png";
+        return "/Imagenes/Fichas/HorseB.png";
+    }
 }

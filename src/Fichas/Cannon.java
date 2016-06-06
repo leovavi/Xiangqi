@@ -9,6 +9,27 @@ package Fichas;
  *
  * @author Leovavi
  */
-public class Cannon {
+public class Cannon extends Ficha{
+
+    public Cannon(String name){
+        super(name);
+    }
+    
+    @Override
+    public void move() {
+
+    }
+
+    @Override
+    public boolean validarMove() {
+        return true;
+    }
+
+    @Override
+    public String icon() {
+        if(turno == 1)
+            return "/Imagenes/Fichas/CannonR.png";
+        return "/Imagenes/Fichas/CannonB.png";
+    }
     
 }

@@ -9,6 +9,27 @@ package Fichas;
  *
  * @author Leovavi
  */
-public class Elephant {
+public class Elephant extends Ficha{
+    public Elephant(String name){
+        super(name);
+    }
+
+    @Override
+    public void move() {
+
+    }
+
+    @Override
+    public boolean validarMove() {
+        return true;
+    }
+
+    @Override
+    public String icon() {
+        if(turno == 1)
+            return "/Imagenes/Fichas/ElephantR.png";
+        return "/Imagenes/Fichas/ElephantB.png";
+    }
+    
     
 }

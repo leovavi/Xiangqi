@@ -9,6 +9,27 @@ package Fichas;
  *
  * @author Leovavi
  */
-public class Soldier {
+public class Soldier extends Ficha{
+    public Soldier(String name){
+        super(name);
+    }
+
+    @Override
+    public void move() {
+
+    }
+
+    @Override
+    public boolean validarMove() {
+        return true;
+    }
+
+    @Override
+    public String icon() {
+        if(turno == 1)
+            return "/Imagenes/Fichas/SoldierR.png";
+        return "/Imagenes/Fichas/SoldierB.png";
+    }
+    
     
 }
