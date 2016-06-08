@@ -6,6 +6,7 @@
 package Visual;
 
 import Errores.PasswordLengthException;
+import Errores.UserAlreadyExistsException;
 import javax.swing.JOptionPane;
 
 /**
@@ -18,8 +19,13 @@ public class MiCuenta extends javax.swing.JPanel {
      */
     public MiCuenta() {
         initComponents();
-        userLabel.setText("Username: "+Menu.menu.userLogged.getUser());
-        fechaLabel.setText("Fecha Creado: "+Menu.menu.userLogged.getDate());
+        try{
+            userLabel.setText("Username: "+Menu.menu.userLogged);
+            fechaLabel.setText("Fecha Creado: "+Menu.ul.searchUser(Menu.userLogged).getDate());
+        }catch(UserAlreadyExistsException e){
+            System.out.println("No pasa");
+        }
+        
     }
 
     /**
@@ -126,8 +132,8 @@ public class MiCuenta extends javax.swing.JPanel {
 
     private void btnChangePasswordActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnChangePasswordActionPerformed
         try{
-            Menu.menu.userLogged.setPass(JOptionPane.showInputDialog(Menu.menu, "New Password: "));
-        }catch(PasswordLengthException e){
+            Menu.ul.searchUser(Menu.userLogged).setPass(JOptionPane.showInputDialog(Menu.menu, "New Password: "));
+        }catch(PasswordLengthException | UserAlreadyExistsException e){
             Menu.menu.showMessage(e.getMessage());
         }
     }//GEN-LAST:event_btnChangePasswordActionPerformed

@@ -20,15 +20,15 @@ public class Elephant extends Ficha{
     }
 
     @Override
-    public boolean validarMove() {
-        return true;
+    public boolean validarMove(int x, int y, int x1, int y1) {
+        return ((x+2==x1 && y+2==y1) || (x+2==x1 && y-2==y1) || (x-2==x1 && y-2==y1) || (x-2==x1 && y+2==y1));
     }
 
     @Override
     public String icon() {
         if(turno == 1)
-            return "/Imagenes/Fichas/ElephantR.png";
-        return "/Imagenes/Fichas/ElephantB.png";
+            return "src/Imagenes/Fichas/ElephantR.png";
+        return "src/Imagenes/Fichas/ElephantB.png";
     }
     
     

@@ -10,14 +10,14 @@ import javax.swing.JPanel;
 public class Menu extends JFrame {
     public static Menu menu = new Menu();
     static UserList ul = new UserList();
-    static Login userLogged, userLogged2;
+    static String userLogged, userLogged2;
     
     /**
      * Creates new form Menu
      */
     public Menu() {
         initComponents();
-        setPanel(new MenuInicio());
+        setPanel(new Game());
     }
 
     /**

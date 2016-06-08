@@ -20,14 +20,14 @@ public class Chariot extends Ficha{
     }
 
     @Override
-    public boolean validarMove() {
-        return true;
+    public boolean validarMove(int x, int y, int x1, int y1) {
+        return ((x>x1 && y==y1) || (x<x1 && y==y1) || (x==x1 && y>y1) || (x==x1 && y<y1));
     }
 
     @Override
     public String icon() {
         if(turno == 1)
-            return "/Imagenes/Fichas/ChariotR.png";
-        return "/Imagenes/Fichas/ChariotB.png";
+            return "src/Imagenes/Fichas/ChariotR.png";
+        return "src/Imagenes/Fichas/ChariotB.png";
     }
 }

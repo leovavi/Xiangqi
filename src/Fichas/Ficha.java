@@ -1,23 +1,32 @@
 package Fichas;
 
-public abstract class Ficha {
-    int turno;
+import javax.swing.JLabel;
+
+public abstract class Ficha extends JLabel{
+    public static int turno = 1;
     String name;
     
     public Ficha(String name){
-        turno = 1;
+        super();
         this.name = name;
     }
     
-    public String getName(){
+    public final String getFichaName(){
         return name;
     }
     
-    public int getTurno(){
+    public final int getTurno(){
         return turno;
     }
     
+    public final void cambiarTurnos(){
+        if(turno==1)
+            turno = 2;
+        else
+            turno = 1;
+    }
+    
     public abstract void move();
-    public abstract boolean validarMove();
+    public abstract boolean validarMove(int x, int y, int x1, int y1);
     public abstract String icon();
 }

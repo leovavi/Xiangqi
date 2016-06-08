@@ -20,15 +20,22 @@ public class Soldier extends Ficha{
     }
 
     @Override
-    public boolean validarMove() {
-        return true;
+    public boolean validarMove(int x, int y, int x1, int y1){
+        if(turno==1){//Jugador 1 se mueve
+            if(x>5)//Jugador 1 ha cruzado el rio
+                return ((x+1==x1 && y==y1) || (x==x1 && y-1==y1) || (x==x1 && y+1==y1));
+            return (x+1==x1 && y==y1);
+        }
+        if(x>5)//Jugador 2 se mueve hacia arriba y ya ha cruzado el rio
+            return ((x+1==x1 && y==y1) || (x==x1 && y+1==y1) || (x==x1 && y-1==y1));
+        return (x+1==x1 && y==y1);
     }
 
     @Override
     public String icon() {
         if(turno == 1)
-            return "/Imagenes/Fichas/SoldierR.png";
-        return "/Imagenes/Fichas/SoldierB.png";
+            return "src/Imagenes/Fichas/SoldierR.png";
+        return "src/Imagenes/Fichas/SoldierB.png";
     }
     
     

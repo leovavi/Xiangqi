@@ -14,15 +14,15 @@ import javax.swing.DefaultListModel;
  * @author Leovavi
  */
 public class PlayersAvailable extends javax.swing.JPanel {
-    static PlayersAvailable pa = new PlayersAvailable();
-    DefaultListModel dlm = new DefaultListModel();
+    static DefaultListModel dlm = new DefaultListModel();
     /**
      * Creates new form PlayersAvailable
      */
     public PlayersAvailable() {
         initComponents();
-        for(Login p : Menu.menu.ul.users)
-            if(!p.getUser().equals(Menu.userLogged.getUser()))
+      //  pa = new PlayersAvailable();
+        for(Login p : Menu.ul.users)
+            if(!p.getUser().equals(Menu.userLogged))
                 dlm.addElement(p.getUser());
         playersList.setModel(dlm);
     }
@@ -51,7 +51,6 @@ public class PlayersAvailable extends javax.swing.JPanel {
         PlayersLabel.setBounds(470, 260, 220, 40);
 
         playersList.setFont(new java.awt.Font("Chinese Takeaway", 2, 14)); // NOI18N
-        playersList.setModel(new DefaultListModel());
         playersList.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 playersListMouseClicked(evt);
@@ -81,12 +80,8 @@ public class PlayersAvailable extends javax.swing.JPanel {
     }//GEN-LAST:event_btnBackActionPerformed
 
     private void playersListMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_playersListMouseClicked
-        try{
-            Menu.userLogged2 = Menu.ul.searchUser(playersList.getSelectedValue());
-            Menu.menu.setPanel(new Game());
-        }catch(UserAlreadyExistsException e){
-            System.out.println("No pasa");
-        }
+        Menu.userLogged2 = playersList.getSelectedValue();
+        Menu.menu.setPanel(new Game());        
     }//GEN-LAST:event_playersListMouseClicked
 
 

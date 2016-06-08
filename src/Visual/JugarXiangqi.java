@@ -83,12 +83,10 @@ public class JugarXiangqi extends javax.swing.JPanel {
     }//GEN-LAST:event_btnBackActionPerformed
 
     private void btnNuevaPartidaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNuevaPartidaActionPerformed
-        try{
-            if(PlayersAvailable.pa.dlm.firstElement()!=null);
-                Menu.menu.setPanel(new PlayersAvailable());
-        }catch(NullPointerException | NoSuchElementException e){
+        if(Menu.ul.users.size()>1)
+            Menu.menu.setPanel(new PlayersAvailable());
+        else
             Menu.menu.showMessage("No Players Available");
-        }
     }//GEN-LAST:event_btnNuevaPartidaActionPerformed
 
     private void btnCargarPartidaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCargarPartidaActionPerformed

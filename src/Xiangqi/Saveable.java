@@ -7,13 +7,12 @@ package Xiangqi;
 
 import Errores.PasswordLengthException;
 import Errores.UserAlreadyExistsException;
-import java.io.Serializable;
 
 /**
  *
  * @author Leovavi
  */
-public interface Saveable extends Serializable{
+public interface Saveable {
     void saveUser(String u, String pass) throws UserAlreadyExistsException, PasswordLengthException;
     void listUsers();
 }
