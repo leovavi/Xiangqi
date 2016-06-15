@@ -5,8 +5,6 @@
  */
 package Visual;
 
-import Errores.UserAlreadyExistsException;
-import Xiangqi.Login;
 import javax.swing.DefaultListModel;
 
 /**
@@ -14,16 +12,14 @@ import javax.swing.DefaultListModel;
  * @author Leovavi
  */
 public class PlayersAvailable extends javax.swing.JPanel {
-    static DefaultListModel dlm = new DefaultListModel();
+    public static DefaultListModel dlm;
     /**
      * Creates new form PlayersAvailable
      */
     public PlayersAvailable() {
         initComponents();
-      //  pa = new PlayersAvailable();
-        for(Login p : Menu.ul.users)
-            if(!p.getUser().equals(Menu.userLogged))
-                dlm.addElement(p.getUser());
+        dlm = new DefaultListModel();
+        Menu.PL.listUsers();
         playersList.setModel(dlm);
     }
 
@@ -80,8 +76,10 @@ public class PlayersAvailable extends javax.swing.JPanel {
     }//GEN-LAST:event_btnBackActionPerformed
 
     private void playersListMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_playersListMouseClicked
-        Menu.userLogged2 = playersList.getSelectedValue();
-        Menu.menu.setPanel(new Game());        
+        if(!playersList.getSelectedValue().equals("")){
+            Menu.userLogged2 = playersList.getSelectedValue();
+            Menu.menu.setPanel(new Game());        
+        }            
     }//GEN-LAST:event_playersListMouseClicked
 
 

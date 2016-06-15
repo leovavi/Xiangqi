@@ -5,8 +5,9 @@
  */
 package Visual;
 
-import java.util.NoSuchElementException;
-
+import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 /**
  *
  * @author Leovavi
@@ -83,10 +84,12 @@ public class JugarXiangqi extends javax.swing.JPanel {
     }//GEN-LAST:event_btnBackActionPerformed
 
     private void btnNuevaPartidaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNuevaPartidaActionPerformed
-        if(Menu.ul.users.size()>1)
-            Menu.menu.setPanel(new PlayersAvailable());
-        else
-            Menu.menu.showMessage("No Players Available");
+        try {
+            if(Menu.PL.players.length()>(Menu.userLogged.length()*2)+19)
+                Menu.menu.setPanel(new PlayersAvailable());
+            else
+                Menu.menu.showMessage("No Players Available");
+        } catch(IOException ex){}
     }//GEN-LAST:event_btnNuevaPartidaActionPerformed
 
     private void btnCargarPartidaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCargarPartidaActionPerformed

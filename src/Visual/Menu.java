@@ -1,7 +1,6 @@
 package Visual;
 
-import Xiangqi.Login;
-import Xiangqi.UserList;
+import Xiangqi.Players;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
@@ -9,15 +8,15 @@ import javax.swing.JPanel;
 
 public class Menu extends JFrame {
     public static Menu menu = new Menu();
-    static UserList ul = new UserList();
-    static String userLogged, userLogged2;
+    static Players PL = new Players();
+    public static String userLogged, userLogged2;
     
     /**
      * Creates new form Menu
      */
     public Menu() {
         initComponents();
-        setPanel(new Game());
+        setPanel(new MenuInicio());
     }
 
     /**

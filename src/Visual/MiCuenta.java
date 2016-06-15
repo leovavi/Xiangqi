@@ -5,8 +5,7 @@
  */
 package Visual;
 
-import Errores.PasswordLengthException;
-import Errores.UserAlreadyExistsException;
+import java.io.IOException;
 import javax.swing.JOptionPane;
 
 /**
@@ -20,12 +19,12 @@ public class MiCuenta extends javax.swing.JPanel {
     public MiCuenta() {
         initComponents();
         try{
+            Menu.PL.searchUser(Menu.userLogged);
             userLabel.setText("Username: "+Menu.menu.userLogged);
-            fechaLabel.setText("Fecha Creado: "+Menu.ul.searchUser(Menu.userLogged).getDate());
-        }catch(UserAlreadyExistsException e){
-            System.out.println("No pasa");
-        }
-        
+            Menu.PL.players.readUTF();
+            puntosLabel.setText("Puntos: "+Menu.PL.players.readInt());
+            fechaLabel.setText("Fecha Creado: PENDIENTE");
+        }catch(IOException e){}
     }
 
     /**
@@ -127,15 +126,11 @@ public class MiCuenta extends javax.swing.JPanel {
     }//GEN-LAST:event_btnConnectFacebookActionPerformed
 
     private void btnDeleteAccountActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeleteAccountActionPerformed
-        Menu.menu.showMessage("PROXIMAMENTE ESTARÄ DISPONIBLE");
+        Menu.menu.showMessage("PROXIMAMENTE ESTARA DISPONIBLE");
     }//GEN-LAST:event_btnDeleteAccountActionPerformed
 
     private void btnChangePasswordActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnChangePasswordActionPerformed
-        try{
-            Menu.ul.searchUser(Menu.userLogged).setPass(JOptionPane.showInputDialog(Menu.menu, "New Password: "));
-        }catch(PasswordLengthException | UserAlreadyExistsException e){
-            Menu.menu.showMessage(e.getMessage());
-        }
+        Menu.PL.changePassword();
     }//GEN-LAST:event_btnChangePasswordActionPerformed
 
 

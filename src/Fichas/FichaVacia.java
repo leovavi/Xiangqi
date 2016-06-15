@@ -15,7 +15,7 @@ public class FichaVacia extends Ficha{
 
     @Override
     public boolean validarMove(int x, int y, int x1, int y1) {
-        return true;
+        return false;
     }
 
     @Override

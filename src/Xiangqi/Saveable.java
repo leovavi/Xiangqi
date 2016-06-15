@@ -7,12 +7,14 @@ package Xiangqi;
 
 import Errores.PasswordLengthException;
 import Errores.UserAlreadyExistsException;
+import java.io.IOException;
 
 /**
  *
  * @author Leovavi
  */
 public interface Saveable {
-    void saveUser(String u, String pass) throws UserAlreadyExistsException, PasswordLengthException;
+    boolean searchUser(String u) throws IOException;
+    void saveUser(String u, String pass) throws UserAlreadyExistsException, PasswordLengthException, IOException;
     void listUsers();
 }

@@ -1,9 +1,5 @@
 package Visual;
 
-import Errores.PasswordLengthException;
-import Errores.UserAlreadyExistsException;
-import Xiangqi.Login;
-
 public class MenuInicio extends javax.swing.JPanel {
     /**
      * Creates new form MenuInicio
@@ -91,31 +87,13 @@ public class MenuInicio extends javax.swing.JPanel {
     private void btnLogInActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLogInActionPerformed
         String user = userTF.getText();
         String pass = String.valueOf(passTF.getPassword());
-        try{
-            Login log = Menu.ul.searchUser(user);
-            if(log.getPass().equals(pass)){
-                Menu.userLogged = user;
-                Menu.menu.setPanel(new MenuPrincipal());
-            }else
-                Menu.menu.showMessage("Invalid Password");
-        }catch(UserAlreadyExistsException e){
-            Menu.menu.showMessage("No Pasa");
-        }catch(NullPointerException e){
-            Menu.menu.showMessage("User "+user+" Not Found");
-        }
+        Menu.PL.Login(user, pass);
     }//GEN-LAST:event_btnLogInActionPerformed
 
     private void btnCreatePlayerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCreatePlayerActionPerformed
         String user = userTF.getText();
         String pass = String.valueOf(passTF.getPassword());
-        try{
-            Menu.ul.saveUser(user, pass);
-            Menu.menu.showMessage("User Created!");
-            Menu.userLogged = user;
-            Menu.menu.setPanel(new MenuPrincipal());
-        }catch(PasswordLengthException | UserAlreadyExistsException e){
-            Menu.menu.showMessage(e.getMessage());
-        }
+        Menu.PL.createPlayer(user, pass);
     }//GEN-LAST:event_btnCreatePlayerActionPerformed
 
 

@@ -22,8 +22,9 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 public final class Tablero extends JPanel{
+    static JPanel jpan = new Tablero();
     JLabel[][] pieces = new Ficha[10][9];
-    JFrame tablero = new JFrame("Xiangqi");
+    static JFrame tablero = new JFrame("Xiangqi");
     Container cont = new Container();
     GridLayout gridLayout = new GridLayout(10, 9);
     Image background = Toolkit.getDefaultToolkit().createImage("src/Imagenes/tablero.png");
@@ -79,10 +80,18 @@ public final class Tablero extends JPanel{
                 }
                 contTurnos++;
                 add(pieces[x][y]);
-                pieces[x][y].setBounds(y*50, x*50, 60, 60);
             }
             if(contTurnos == 16)
-                Ficha.turno = 2;
-        }
+                changeTurno();
+        }Ficha.turno = 1;
     }
+    
+    public void changeTurno(){
+        if(Ficha.turno==1)
+            Ficha.turno = 2;
+        else
+            Ficha.turno = 1;
+    }
+    
+    
 }

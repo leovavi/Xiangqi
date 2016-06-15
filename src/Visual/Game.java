@@ -22,6 +22,8 @@ public final class Game extends javax.swing.JPanel {
     public Game() {
         initComponents();
         setTableroPanel(tab);
+        userLoggedLabel.setText(Menu.userLogged);
+        userLogged2Label.setText(Menu.userLogged2);
     }
 
     public void setTableroPanel(JPanel panel){
@@ -44,6 +46,8 @@ public final class Game extends javax.swing.JPanel {
         jLabel1 = new javax.swing.JLabel();
         btnSaveQuit = new javax.swing.JButton();
         btnSurrender = new javax.swing.JButton();
+        userLogged2Label = new javax.swing.JLabel();
+        userLoggedLabel = new javax.swing.JLabel();
         MainLabel = new javax.swing.JLabel();
 
         setLayout(null);
@@ -76,14 +80,23 @@ public final class Game extends javax.swing.JPanel {
         add(btnSurrender);
         btnSurrender.setBounds(20, 530, 200, 40);
 
+        userLogged2Label.setFont(new java.awt.Font("Chinese Takeaway", 2, 18)); // NOI18N
+        userLogged2Label.setText("User Logged 2");
+        add(userLogged2Label);
+        userLogged2Label.setBounds(940, 40, 180, 40);
+
+        userLoggedLabel.setFont(new java.awt.Font("Chinese Takeaway", 2, 18)); // NOI18N
+        userLoggedLabel.setText("User Logged");
+        add(userLoggedLabel);
+        userLoggedLabel.setBounds(40, 40, 180, 40);
+
         MainLabel.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/background.png"))); // NOI18N
         add(MainLabel);
         MainLabel.setBounds(0, 0, 1150, 650);
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnSurrenderActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSurrenderActionPerformed
-        Menu.menu.showMessage((Ficha.turno==1 ? Menu.userLogged : Menu.userLogged2)+" has retired, congratulations "+
-                (Ficha.turno==1 ? Menu.userLogged2 : Menu.userLogged));
+        Menu.PL.surrender();
         Menu.menu.setPanel(new MenuPrincipal());
     }//GEN-LAST:event_btnSurrenderActionPerformed
 
@@ -98,5 +111,7 @@ public final class Game extends javax.swing.JPanel {
     private javax.swing.JButton btnSurrender;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel tablero;
+    private javax.swing.JLabel userLogged2Label;
+    private javax.swing.JLabel userLoggedLabel;
     // End of variables declaration//GEN-END:variables
 }
