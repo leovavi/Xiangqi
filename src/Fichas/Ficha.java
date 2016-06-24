@@ -2,13 +2,16 @@ package Fichas;
 
 import javax.swing.JLabel;
 
-public abstract class Ficha extends JLabel{
-    public static int turno = 1;
+public abstract class Ficha extends JLabel implements Fortressable{
+    public String color = "";
+    public int turno;
     String name;
     
-    public Ficha(String name){
+    public Ficha(String name, int turno){
         super();
         this.name = name;
+        this.turno = turno;
+        color = (turno == 1 ? "R" : "B");
     }
     
     public final String getFichaName(){
@@ -19,14 +22,10 @@ public abstract class Ficha extends JLabel{
         return turno;
     }
     
-    public final void cambiarTurnos(){
-        if(turno==1)
-            turno = 2;
-        else
-            turno = 1;
+    public final String getColor(){
+        return color;
     }
     
-    public abstract void move();
     public abstract boolean validarMove(int x, int y, int x1, int y1);
     public abstract String icon();
 }

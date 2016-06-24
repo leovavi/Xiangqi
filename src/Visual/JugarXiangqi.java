@@ -5,15 +5,12 @@
  */
 package Visual;
 
-import java.io.IOException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 /**
  *
  * @author Leovavi
  */
 public class JugarXiangqi extends javax.swing.JPanel {
-
+    PlayersAvailable PA = new PlayersAvailable();
     /**
      * Creates new form JugarXiangqi
      */
@@ -84,12 +81,10 @@ public class JugarXiangqi extends javax.swing.JPanel {
     }//GEN-LAST:event_btnBackActionPerformed
 
     private void btnNuevaPartidaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNuevaPartidaActionPerformed
-        try {
-            if(Menu.PL.players.length()>(Menu.userLogged.length()*2)+19)
-                Menu.menu.setPanel(new PlayersAvailable());
-            else
-                Menu.menu.showMessage("No Players Available");
-        } catch(IOException ex){}
+        if(!PA.dlm.isEmpty())
+            Menu.menu.setPanel(new PlayersAvailable());
+        else
+            Menu.menu.showMessage("No Players Available");
     }//GEN-LAST:event_btnNuevaPartidaActionPerformed
 
     private void btnCargarPartidaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCargarPartidaActionPerformed

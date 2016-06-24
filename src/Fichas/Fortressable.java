@@ -5,10 +5,13 @@
  */
 package Fichas;
 
+import java.io.Serializable;
+
 /**
  *
  * @author Leovavi
  */
-public interface Fortressable {
+public interface Fortressable  extends Serializable{
     //Utilizado para saber si los Generales y Consejeros pueden moverse ahí.
+    public abstract boolean insideFort(int x, int y);
 }

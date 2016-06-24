@@ -11,13 +11,8 @@ package Fichas;
  */
 public class Cannon extends Ficha{
 
-    public Cannon(String name){
-        super(name);
-    }
-    
-    @Override
-    public void move() {
-
+    public Cannon(String name, int turno){
+        super(name, turno);
     }
 
     @Override
@@ -27,9 +22,13 @@ public class Cannon extends Ficha{
 
     @Override
     public String icon() {
-        if(turno == 1)
-            return "src/Imagenes/Fichas/CannonR.png";
-        return "src/Imagenes/Fichas/CannonB.png";
+        return "src/Imagenes/Fichas/Cannon"+getColor()+".png";
     }
     
+    @Override
+    public boolean insideFort(int x, int y){            
+        return (x==3 && (y==0 || y==9)) || (x==4 && (y==0 || y==9)) || (x==5 && (y==0 || y==9)) ||
+               (x==3 && (y==1 || y==8)) || (x==4 && (y==1 || y==8)) || (x==5 && (y==1 || y==8)) ||
+               (x==3 && (y==2 || y==7)) || (x==4 && (y==2 || y==7)) || (x==5 && (y==2 || y==7));
+    }
 }

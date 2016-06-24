@@ -5,17 +5,21 @@
  */
 package Visual;
 
+import javax.swing.DefaultListModel;
+
 /**
  *
  * @author Leovavi
  */
 public class Logs extends javax.swing.JPanel {
-
+    DefaultListModel dlm;
     /**
      * Creates new form Logs
      */
     public Logs() {
         initComponents();
+        dlm = new DefaultListModel();
+        
     }
 
     /**

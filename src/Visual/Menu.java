@@ -16,7 +16,7 @@ public class Menu extends JFrame {
      */
     public Menu() {
         initComponents();
-        setPanel(new MenuInicio());
+        setPanel(new Game());
     }
 
     /**

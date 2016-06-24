@@ -6,6 +6,7 @@
 package Visual;
 
 import java.io.IOException;
+import java.util.Date;
 import javax.swing.JOptionPane;
 
 /**
@@ -23,7 +24,7 @@ public class MiCuenta extends javax.swing.JPanel {
             userLabel.setText("Username: "+Menu.menu.userLogged);
             Menu.PL.players.readUTF();
             puntosLabel.setText("Puntos: "+Menu.PL.players.readInt());
-            fechaLabel.setText("Fecha Creado: PENDIENTE");
+            fechaLabel.setText("Fecha Creado: "+new Date(Menu.PL.players.readLong()));
         }catch(IOException e){}
     }
 
