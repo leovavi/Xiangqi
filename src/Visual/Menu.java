@@ -1,6 +1,6 @@
 package Visual;
 
-import Xiangqi.Players;
+import Xiangqi.Xiangqi;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
@@ -8,7 +8,7 @@ import javax.swing.JPanel;
 
 public class Menu extends JFrame {
     public static Menu menu = new Menu();
-    static Players PL = new Players();
+    static Xiangqi xia = new Xiangqi();
     public static String userLogged, userLogged2;
     
     /**
@@ -16,7 +16,7 @@ public class Menu extends JFrame {
      */
     public Menu() {
         initComponents();
-        setPanel(new Game());
+        setPanel(new MenuInicio());
     }
 
     /**

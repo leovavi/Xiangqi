@@ -19,7 +19,8 @@ public class Logs extends javax.swing.JPanel {
     public Logs() {
         initComponents();
         dlm = new DefaultListModel();
-        
+        Menu.xia.listLogs(dlm);
+        logList.setModel(dlm);
     }
 
     /**
@@ -35,6 +36,7 @@ public class Logs extends javax.swing.JPanel {
         jScrollPane1 = new javax.swing.JScrollPane();
         logList = new javax.swing.JList<>();
         btnBack = new javax.swing.JButton();
+        btnExport = new javax.swing.JButton();
         MainLabel = new javax.swing.JLabel();
 
         setLayout(null);
@@ -45,6 +47,7 @@ public class Logs extends javax.swing.JPanel {
         add(logLabel);
         logLabel.setBounds(550, 260, 60, 30);
 
+        logList.setFont(new java.awt.Font("Chinese Takeaway", 0, 14)); // NOI18N
         logList.setModel(new javax.swing.AbstractListModel<String>() {
             String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
             public int getSize() { return strings.length; }
@@ -64,6 +67,15 @@ public class Logs extends javax.swing.JPanel {
         add(btnBack);
         btnBack.setBounds(933, 603, 200, 40);
 
+        btnExport.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/exportLogs.png"))); // NOI18N
+        btnExport.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnExportActionPerformed(evt);
+            }
+        });
+        add(btnExport);
+        btnExport.setBounds(933, 540, 200, 40);
+
         MainLabel.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/MainBackground.png"))); // NOI18N
         add(MainLabel);
         MainLabel.setBounds(0, 0, 1150, 650);
@@ -73,10 +85,15 @@ public class Logs extends javax.swing.JPanel {
         Menu.menu.setPanel(new Reportes());
     }//GEN-LAST:event_btnBackActionPerformed
 
+    private void btnExportActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExportActionPerformed
+        Menu.xia.exportLogs();
+    }//GEN-LAST:event_btnExportActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel MainLabel;
     private javax.swing.JButton btnBack;
+    private javax.swing.JButton btnExport;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JLabel logLabel;
     private javax.swing.JList<String> logList;

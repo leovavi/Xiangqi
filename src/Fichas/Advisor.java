@@ -5,12 +5,11 @@
  */
 package Fichas;
 
-import javax.swing.JLabel;
-
 /**
  *
  * @author Leovavi
  */
+
 public final class Advisor extends Ficha{    
     public Advisor(String name, int turno){
         super(name, turno);

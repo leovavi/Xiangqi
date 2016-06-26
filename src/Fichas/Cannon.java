@@ -9,7 +9,7 @@ package Fichas;
  *
  * @author Leovavi
  */
-public class Cannon extends Ficha{
+public final class Cannon extends Ficha{
 
     public Cannon(String name, int turno){
         super(name, turno);
@@ -17,7 +17,7 @@ public class Cannon extends Ficha{
 
     @Override
     public boolean validarMove(int x, int y, int x1, int y1){
-        return ((x>x1 && y==y1) || (x<x1 && y==y1) || (x==x1 && y>y1) || (x==x1 && y<y1));
+        return (y==y1 && (x>x1 || x<x1)) || (x==x1 && (y>y1 || y<y1));
     }
 
     @Override

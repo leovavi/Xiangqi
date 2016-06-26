@@ -5,7 +5,7 @@
  */
 package Visual;
 
-import Fichas.Ficha;
+import Xiangqi.Games;
 import java.awt.image.BufferedImage;
 import javax.swing.JPanel;
 
@@ -32,6 +32,11 @@ public final class Game extends javax.swing.JPanel {
         tablero.repaint();
         tablero.revalidate();
     }
+    
+    public void refreshTurno(int t){
+        String user = (t==1 ? Menu.userLogged : Menu.userLogged2);
+        turnoLabel.setText("Turno Actual: "+user);
+    }
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -47,6 +52,8 @@ public final class Game extends javax.swing.JPanel {
         btnSurrender = new javax.swing.JButton();
         userLogged2Label = new javax.swing.JLabel();
         userLoggedLabel = new javax.swing.JLabel();
+        btnSave = new javax.swing.JButton();
+        turnoLabel = new javax.swing.JLabel();
         MainLabel = new javax.swing.JLabel();
 
         setLayout(null);
@@ -71,7 +78,7 @@ public final class Game extends javax.swing.JPanel {
             }
         });
         add(btnSurrender);
-        btnSurrender.setBounds(20, 530, 200, 40);
+        btnSurrender.setBounds(20, 470, 200, 40);
 
         userLogged2Label.setFont(new java.awt.Font("Chinese Takeaway", 2, 18)); // NOI18N
         userLogged2Label.setText("User Logged 2");
@@ -83,26 +90,49 @@ public final class Game extends javax.swing.JPanel {
         add(userLoggedLabel);
         userLoggedLabel.setBounds(40, 40, 180, 40);
 
+        btnSave.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/save.png"))); // NOI18N
+        btnSave.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnSaveActionPerformed(evt);
+            }
+        });
+        add(btnSave);
+        btnSave.setBounds(20, 530, 200, 40);
+
+        turnoLabel.setFont(new java.awt.Font("Chinese Takeaway", 0, 18)); // NOI18N
+        turnoLabel.setText("TURNO");
+        add(turnoLabel);
+        turnoLabel.setBounds(40, 200, 180, 40);
+
         MainLabel.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/background.png"))); // NOI18N
         add(MainLabel);
         MainLabel.setBounds(0, 0, 1150, 650);
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnSurrenderActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSurrenderActionPerformed
-        Menu.PL.surrender(tab.t);
-        Menu.menu.setPanel(new MenuPrincipal());
+        Menu.xia.surrender(tab.t);
     }//GEN-LAST:event_btnSurrenderActionPerformed
 
     private void btnSaveQuitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSaveQuitActionPerformed
-        //Aunque por los momentos solo se sale de la pantalla
+        tab.saveGame();
         Menu.menu.setPanel(new MenuPrincipal());
     }//GEN-LAST:event_btnSaveQuitActionPerformed
 
+    private void btnSaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSaveActionPerformed
+        try{
+            tab.saveGame();
+        }catch(NullPointerException e){
+            System.out.println(e.getMessage());
+        }
+    }//GEN-LAST:event_btnSaveActionPerformed
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel MainLabel;
+    private javax.swing.JButton btnSave;
     private javax.swing.JButton btnSaveQuit;
     private javax.swing.JButton btnSurrender;
     private javax.swing.JPanel tablero;
+    private javax.swing.JLabel turnoLabel;
     private javax.swing.JLabel userLogged2Label;
     private javax.swing.JLabel userLoggedLabel;
     // End of variables declaration//GEN-END:variables

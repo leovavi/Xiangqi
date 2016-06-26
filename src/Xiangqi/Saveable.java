@@ -17,6 +17,7 @@ import java.io.Serializable;
 public interface Saveable  extends Serializable{
     boolean searchUser(String u) throws IOException;
     void saveUser(String u, String pass) throws UserAlreadyExistsException, PasswordLengthException, IOException;
+    void deleteUser(String u) throws IOException;
     void listUsers();
-    void saveLogs(String u1, String u2, String msg);
+    void saveLogs(String msg);
 }

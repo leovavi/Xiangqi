@@ -9,14 +9,14 @@ package Fichas;
  *
  * @author Leovavi
  */
-public class Chariot extends Ficha{
+public final class Chariot extends Ficha{
     public Chariot(String name, int turno){
         super(name, turno);
     }
     
     @Override
     public boolean validarMove(int x, int y, int x1, int y1) {
-        return ((x>x1 && y==y1) || (x<x1 && y==y1) || (x==x1 && y>y1) || (x==x1 && y<y1));
+        return (y==y1 && (x>x1 || x<x1)) || (x==x1 && (y>y1 || y<y1));
     }
 
     @Override

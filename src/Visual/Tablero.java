@@ -9,12 +9,17 @@ import Fichas.FichaVacia;
 import Fichas.General;
 import Fichas.Horse;
 import Fichas.Soldier;
+import Xiangqi.Games;
 import java.awt.Graphics;
 import java.awt.GridLayout;
 import java.awt.Image;
 import java.awt.Toolkit;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectOutputStream;
 import java.io.Serializable;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
@@ -23,13 +28,20 @@ import javax.swing.JPanel;
 public final class Tablero extends JPanel implements Serializable{
     public int currentX, currentY, t;
     boolean chosenPiece = false;
+    File gameFile;
     JLabel[][] pieces = new Ficha[10][9];
     GridLayout gridLayout = new GridLayout(10, 9);
     Image background = Toolkit.getDefaultToolkit().createImage("src/Imagenes/tablero.png");
     
     public Tablero(){
-        initCuadros();
-        setBounds(0, 0, 540, 600);
+        try{
+            gameFile = new File("Players/"+Menu.userLogged+"/"+Menu.xia.getCode(Menu.userLogged)+"-"+Menu.userLogged2);
+            gameFile.createNewFile();
+            initCuadros();
+            setBounds(0, 0, 540, 600);
+        }catch(IOException e){
+            System.out.println(e.getMessage());
+        }
     }
     
     @Override
@@ -109,110 +121,174 @@ public final class Tablero extends JPanel implements Serializable{
                         moverPieza(x, y);
                     }
                     else if(source==pieces[y][x] && !(source instanceof FichaVacia) && chosenPiece){
-                        
+                        attackPiece(x, y);
                     }
                 }
             }
         }
     }
     
-    public void moverPieza(int x, int y){
-        if(((Ficha)pieces[currentY][currentX]).validarMove(currentX, currentY, x, y)){
-            if(pieces[currentY][currentX] instanceof Advisor || pieces[currentY][currentX] instanceof General){
-                if(((Ficha)pieces[y][x]).insideFort(x, y))
-                    setNewFicha(x, y);
-            }
-            else if(pieces[currentY][currentX] instanceof Elephant){
-                if(currentX+2==x && currentY+2==y){
-                    if(pieces[currentY+1][currentX+1] instanceof FichaVacia)
-                        setNewFicha(x, y);
-                }
-
-                else if(currentX+2==x && currentY-2==y){
-                    if(pieces[currentY-1][currentX+1] instanceof FichaVacia)
-                        setNewFicha(x, y);
-                }
-
-                else if(currentX-2==x && currentY+2==y){
-                    if(pieces[currentY+1][currentX-1] instanceof FichaVacia)
-                        setNewFicha(x, y);
-                }
-
-                else if(currentX-2==x && currentY-2==y){
-                    if(pieces[currentY-1][currentX-1] instanceof FichaVacia)
-                        setNewFicha(x, y);
-                }
-            }
-            else if(pieces[currentY][currentX] instanceof Horse){
-                if(currentX+1==x && currentY+2==y){
-                    if(pieces[currentY+1][currentX] instanceof FichaVacia)
-                        setNewFicha(x, y);
-                }
-                else if(currentX+1==x && currentY-2==y){
-                    if(pieces[currentY-1][currentX] instanceof FichaVacia)
-                        setNewFicha(x, y);
-                }
-                else if(currentX-1==x && currentY+2==y){
-                    if(pieces[currentY+1][currentX] instanceof FichaVacia)
-                        setNewFicha(x, y);
-                }
-                else if(currentX-1==x && currentY-2==y){
-                    if(pieces[currentY-1][currentX] instanceof FichaVacia)
-                        setNewFicha(x, y);
-                }
-                else if(currentX+2==x && currentY+1==y){
-                    if(pieces[currentY][currentX+1] instanceof FichaVacia)
-                        setNewFicha(x, y);
-                }
-                else if(currentX+2==x && currentY-1==y){
-                    if(pieces[currentY][currentX+1] instanceof FichaVacia)
-                        setNewFicha(x, y);
-                }
-                else if(currentX-2==x && currentY+1==y){
-                    if(pieces[currentY][currentX-1] instanceof FichaVacia)
-                        setNewFicha(x, y);
-                }
-                else if(currentX-2==x && currentY-1==y){
-                    if(pieces[currentY][currentX-1] instanceof FichaVacia)
-                        setNewFicha(x, y);
-                }
-            }
-            else if(pieces[currentY][currentX] instanceof Chariot || pieces[currentY][currentX] instanceof Cannon){
-                int intermmediatePiece = 0;
-                if(x>currentX && currentY==y){
-                    for(int x1 = currentX; x1<x; x1++){
-                        System.out.println("x++");
-                        if(!(pieces[currentY][x1] instanceof FichaVacia))
-                            intermmediatePiece++;
-                    }System.out.println();
-                }
-                else if(x<currentX && currentY==y){
-                    for(int x1 = currentX; x1>x; x1--){
-                        System.out.println("x--");
-                        if(!(pieces[currentY][x1] instanceof FichaVacia))
-                            intermmediatePiece++;
-                    }System.out.println("");
-                }
-                else if(x==currentX && y>currentY){
-                    for(int y1 = currentY; y1<y; y1++){
-                        System.out.println("y++");
-                        if(!(pieces[y1][currentX] instanceof FichaVacia))
-                            intermmediatePiece++;
-                    }System.out.println("");
-                }
-                else if(x==currentX && y<currentY){
-                    for(int y1 = currentY; y1>x; y1--){
-                        System.out.println("y--");
-                        if(!(pieces[y1][currentX] instanceof FichaVacia))
-                            intermmediatePiece++;
-                    }System.out.println("");
-                }
-                if(intermmediatePiece==0)
-                    setNewFicha(x, y);
-            }
-            else
+    public void movementGenAdv(int x, int y){
+        if(((Ficha)pieces[y][x]).insideFort(x, y))
+            setNewFicha(x, y);
+    }
+    
+    public void movementEle(int x, int y){
+        if(currentX+2==x && currentY+2==y){
+            if(pieces[currentY+1][currentX+1] instanceof FichaVacia)
                 setNewFicha(x, y);
         }
+
+        else if(currentX+2==x && currentY-2==y){
+            if(pieces[currentY-1][currentX+1] instanceof FichaVacia)
+                setNewFicha(x, y);
+        }
+
+        else if(currentX-2==x && currentY+2==y){
+            if(pieces[currentY+1][currentX-1] instanceof FichaVacia)
+                setNewFicha(x, y);
+        }
+
+        else if(currentX-2==x && currentY-2==y){
+            if(pieces[currentY-1][currentX-1] instanceof FichaVacia)
+                setNewFicha(x, y);
+        }
+    }
+    
+    public void movementHorse(int x, int y){
+        if((currentX+1==x && currentY+2==y) ||(currentX-1==x && currentY+2==y)){
+            if(pieces[currentY+1][currentX] instanceof FichaVacia)
+                setNewFicha(x, y);
+        }
+        else if((currentX+1==x && currentY-2==y) || (currentX-1==x && currentY-2==y)){
+            if(pieces[currentY-1][currentX] instanceof FichaVacia)
+                setNewFicha(x, y);
+        }
+        else if((currentX+2==x && currentY+1==y) || (currentX+2==x && currentY-1==y)){
+            if(pieces[currentY][currentX+1] instanceof FichaVacia)
+                setNewFicha(x, y);
+        }
+        else if((currentX-2==x && currentY+1==y) || (currentX-2==x && currentY-1==y)){
+            if(pieces[currentY][currentX-1] instanceof FichaVacia)
+                setNewFicha(x, y);
+        }
+    }
+    
+    public void movementCharCan(int x, int y, int MOA){
+        int intermmediatePiece = 0;
+        if(x>currentX && currentY==y){
+            for(int x1 = currentX+1; x1<x; x1++)
+                if(!(pieces[currentY][x1] instanceof FichaVacia))
+                    intermmediatePiece++;
+        }
+        else if(x<currentX && currentY==y){
+            for(int x1 = currentX-1; x1>x; x1--)
+                if(!(pieces[currentY][x1] instanceof FichaVacia))
+                    intermmediatePiece++;
+        }
+        else if(x==currentX && y>currentY){
+            for(int y1 = currentY+1; y1<y; y1++)
+                if(!(pieces[y1][currentX] instanceof FichaVacia))
+                    intermmediatePiece++;
+        }
+        else if(x==currentX && y<currentY){
+            for(int y1 = currentY-1; y1>y; y1--)
+                if(!(pieces[y1][currentX] instanceof FichaVacia))
+                    intermmediatePiece++;
+        }
+        if(intermmediatePiece==MOA && MOA==1)
+            setNewFicha(x, y);
+        else if(intermmediatePiece==0 && MOA==0)
+            setNewFicha(x, y);
+    }
+    
+    public void movements(int x, int y){
+        Ficha tempCurrent = (Ficha)pieces[currentY][currentX];
+        Ficha tempNew = (Ficha)pieces[y][x];
+        if(pieces[currentY][currentX] instanceof Advisor || pieces[currentY][currentX] instanceof General)
+            movementGenAdv(x, y);
+
+        else if(pieces[currentY][currentX] instanceof Elephant)
+            movementEle(x, y);
+
+        else if(pieces[currentY][currentX] instanceof Horse)
+            movementHorse(x, y);
+
+        else if((pieces[currentY][currentX] instanceof Chariot) || (pieces[currentY][currentX] instanceof Cannon))
+            movementCharCan(x, y, 0);
+
+        else
+            setNewFicha(x, y);
+        
+        if(facingGenerals()){
+            pieces[currentY][currentX] = tempCurrent;
+            pieces[y][x] = tempNew;
+            refresh();
+            changeTurn();
+        }
+    }
+    
+    public void moverPieza(int x, int y){
+        if(((Ficha)pieces[currentY][currentX]).validarMove(currentX, currentY, x, y))
+            movements(x, y);
+    }
+    
+    public void attacks(int x, int y){
+        Ficha tempCurrent = (Ficha)pieces[currentY][currentX];
+        Ficha tempNew = (Ficha)pieces[y][x];
+        if(pieces[currentY][currentX] instanceof Advisor || pieces[currentY][currentX] instanceof General)
+            movementGenAdv(x, y);
+
+        else if(pieces[currentY][currentX] instanceof Elephant)
+            movementEle(x, y);
+
+        else if(pieces[currentY][currentX] instanceof Horse)
+            movementHorse(x, y);
+
+        else if(pieces[currentY][currentX] instanceof Chariot)
+            movementCharCan(x, y, 0);
+        
+        else if(pieces[currentY][currentX] instanceof Cannon)
+            movementCharCan(x, y, 1);
+
+        else
+            setNewFicha(x, y);
+        
+        if(facingGenerals()){
+            pieces[currentY][currentX] = tempCurrent;
+            pieces[y][x] = tempNew;
+            refresh();
+            changeTurn();
+        }
+    }
+    
+    public void attackPiece(int x, int y){
+        if(((Ficha)pieces[currentY][currentX]).validarMove(currentX, currentY, x, y))
+            attacks(x, y);
+    }
+    
+    public boolean facingGenerals(){
+        boolean encontrado = false, facing = false;
+        for(int y = 0; y<3; y++){
+            for(int x = 3; x<6; x++){
+                if(pieces[y][x] instanceof General){
+                    encontrado = true;
+                    for(int z = y+1; z<10; z++){
+                        if(!(pieces[z][x] instanceof FichaVacia)){
+                            if(pieces[z][x] instanceof General)
+                                facing = true;
+                            else
+                                facing = false;
+                            break;
+                        }
+                    }
+                }
+            }
+            if(encontrado) break;
+        }
+        if(facing)
+            return true;
+        return false;
     }
     
     public void refresh(){
@@ -223,18 +299,16 @@ public final class Tablero extends JPanel implements Serializable{
                 add(pieces[y][x]);
             }
         }
-        System.out.println("Turno de: "+t);
         revalidate();
     }
     
     public void setNewFicha(int x, int y){
         pieces[y][x] = pieces[currentY][currentX];
         newFichaVacia(currentX, currentY);
-        currentX = 0;
-        currentY = 0;
         chosenPiece = false;
         changeTurn();
         refresh();
+        endGame();
     }
     
     public void newFichaVacia(int x, int y){
@@ -242,24 +316,36 @@ public final class Tablero extends JPanel implements Serializable{
         pieces[y][x].addMouseListener(new PressedMouse());
     }
     
-    public boolean endGame(){
+    public boolean generalsAlive(){
         int cantGeneral = 0;
         for(int y = 0; y<10; y++)
-            for(int x = 0; x<9; x++)
+            for(int x = 3; x<6; x++)
                 if(pieces[y][x] instanceof General)
                     cantGeneral++;
         if(cantGeneral==2)
-            return false;
-        return true;
+            return true;
+        return false;
     }
     
-    public boolean notFichasAround(int x, int y, int x1, int y1){
-        for(int f = y; f<y1; f++){
-            for(int c = x; c<x1; c++){
-                if(!(pieces[f][c] instanceof FichaVacia))
-                    return false;
-            }
+    public void endGame(){
+        if(!generalsAlive()){
+            String winner = (t==1 ? Menu.userLogged2 : Menu.userLogged);
+            String loser = (t==1 ? Menu.userLogged : Menu.userLogged2);
+            
+            String victory = winner+" has won the game against "+loser+". "+winner+" has gained 3 points.";
+            
+            Menu.xia.addPoints(winner, victory);
+            Menu.xia.saveLogs(victory);
+            Menu.menu.showMessage(victory);
+            Menu.menu.setPanel(new MenuPrincipal());
         }
-        return true;
+    }
+    
+    public void saveGame(){
+        try(FileOutputStream file = new FileOutputStream(gameFile); 
+                ObjectOutputStream data = new ObjectOutputStream(file)){
+            data.reset();
+            data.writeObject(new Games(pieces, t));
+        }catch(IOException e){}
     }
 }

@@ -5,13 +5,11 @@
  */
 package Fichas;
 
-import Visual.Tablero;
-
 /**
  *
  * @author Leovavi
  */
-public class Horse extends Ficha{
+public final class Horse extends Ficha{
     public Horse(String name, int turno){
         super(name, turno);
     }

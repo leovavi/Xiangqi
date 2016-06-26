@@ -76,8 +76,10 @@ public class Reportes extends javax.swing.JPanel {
     }//GEN-LAST:event_btnRankingActionPerformed
 
     private void btnLogsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLogsActionPerformed
-        
-        //Menu.menu.setPanel(new Logs());
+        if(!logs.dlm.isEmpty())
+            Menu.menu.setPanel(new Logs());
+        else
+            Menu.menu.showMessage("No Logs Available");
     }//GEN-LAST:event_btnLogsActionPerformed
 
 

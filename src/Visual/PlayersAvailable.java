@@ -19,7 +19,7 @@ public class PlayersAvailable extends javax.swing.JPanel {
     public PlayersAvailable() {
         initComponents();
         dlm = new DefaultListModel();
-        Menu.PL.listUsers();
+        Menu.xia.listUsers();
         playersList.setModel(dlm);
     }
 

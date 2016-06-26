@@ -9,14 +9,21 @@ package Fichas;
  *
  * @author Leovavi
  */
-public class Elephant extends Ficha{
+public final class Elephant extends Ficha{
     public Elephant(String name, int turno){
         super(name, turno);
     }
 
     @Override
     public boolean validarMove(int x, int y, int x1, int y1) {
-        return ((x+2==x1 && (y+2==y1 || y-2==y1)) || (x-2==x1 && (y+2==y1 || y-2==y1)));
+        if(turno==1){
+            if(y1<=4)
+                return ((x+2==x1 && (y+2==y1 || y-2==y1)) || (x-2==x1 && (y+2==y1 || y-2==y1)));
+            return false;
+        }
+        if(y1>=5)
+            return ((x+2==x1 && (y+2==y1 || y-2==y1)) || (x-2==x1 && (y+2==y1 || y-2==y1)));
+        return false;
     }
 
     @Override

@@ -1,6 +1,6 @@
 package Fichas;
 
-public class FichaVacia extends Ficha{
+public final class FichaVacia extends Ficha{
     public FichaVacia(String name, int turno){
         super(name, turno);
     }

@@ -3,7 +3,7 @@ package Fichas;
 import javax.swing.JLabel;
 
 public abstract class Ficha extends JLabel implements Fortressable{
-    public String color = "";
+    public String color;
     public int turno;
     String name;
     

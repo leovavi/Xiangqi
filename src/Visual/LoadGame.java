@@ -5,17 +5,22 @@
  */
 package Visual;
 
+import javax.swing.DefaultListModel;
+
 /**
  *
  * @author Leovavi
  */
 public class LoadGame extends javax.swing.JPanel {
-
+    public static DefaultListModel dlm;
     /**
      * Creates new form Games
      */
     public LoadGame() {
         initComponents();
+        dlm = new DefaultListModel();
+        Menu.xia.listGames(dlm);
+        loadGameList.setModel(dlm);
     }
 
     /**
@@ -50,6 +55,7 @@ public class LoadGame extends javax.swing.JPanel {
         add(gamesLabel);
         gamesLabel.setBounds(520, 260, 80, 40);
 
+        loadGameList.setFont(new java.awt.Font("Chinese Takeaway", 0, 14)); // NOI18N
         loadGameList.setModel(new javax.swing.AbstractListModel<String>() {
             String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
             public int getSize() { return strings.length; }

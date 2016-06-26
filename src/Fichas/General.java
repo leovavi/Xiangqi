@@ -9,7 +9,7 @@ package Fichas;
  *
  * @author Leovavi
  */
-public class General extends Ficha{
+public final class General extends Ficha{
     public General(String name, int turno){
         super(name, turno);
     }

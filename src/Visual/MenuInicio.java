@@ -87,13 +87,13 @@ public class MenuInicio extends javax.swing.JPanel {
     private void btnLogInActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLogInActionPerformed
         String user = userTF.getText();
         String pass = String.valueOf(passTF.getPassword());
-        Menu.PL.Login(user, pass);
+        Menu.xia.Login(user, pass);
     }//GEN-LAST:event_btnLogInActionPerformed
 
     private void btnCreatePlayerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCreatePlayerActionPerformed
         String user = userTF.getText();
         String pass = String.valueOf(passTF.getPassword());
-        Menu.PL.createPlayer(user, pass);
+        Menu.xia.createPlayer(user, pass);
     }//GEN-LAST:event_btnCreatePlayerActionPerformed
 
 
