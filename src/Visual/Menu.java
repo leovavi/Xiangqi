@@ -8,8 +8,9 @@ import javax.swing.JPanel;
 
 public class Menu extends JFrame {
     public static Menu menu = new Menu();
-    static Xiangqi xia = new Xiangqi();
-    public static String userLogged, userLogged2;
+    public static Xiangqi xia = new Xiangqi();
+    public static Tablero tablero;
+    public static String userLogged, userLogged2, path;
     
     /**
      * Creates new form Menu

@@ -5,6 +5,7 @@
  */
 package Visual;
 
+import java.io.IOException;
 import javax.swing.DefaultListModel;
 
 /**
@@ -77,8 +78,10 @@ public class PlayersAvailable extends javax.swing.JPanel {
 
     private void playersListMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_playersListMouseClicked
         if(!playersList.getSelectedValue().equals("")){
-            Menu.userLogged2 = playersList.getSelectedValue();
-            Menu.menu.setPanel(new Game(new Tablero()));
+            try {
+                Tablero.newGame(playersList.getSelectedValue());
+                Menu.menu.setPanel(new Game());
+            } catch (IOException e) {}
         }            
     }//GEN-LAST:event_playersListMouseClicked
 

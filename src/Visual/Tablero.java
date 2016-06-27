@@ -9,7 +9,6 @@ import Fichas.FichaVacia;
 import Fichas.General;
 import Fichas.Horse;
 import Fichas.Soldier;
-import Xiangqi.Games;
 import java.awt.Graphics;
 import java.awt.GridLayout;
 import java.awt.Image;
@@ -30,18 +29,13 @@ import javax.swing.JPanel;
 public final class Tablero extends JPanel implements Serializable{
     public int currentX, currentY, t;
     boolean chosenPiece = false;
-    File gameFile;
+    transient Image background = Toolkit.getDefaultToolkit().createImage("src/Imagenes/tablero.png");
     JLabel[][] pieces = new Ficha[10][9];
     GridLayout gridLayout = new GridLayout(10, 9);
-    transient Image background = Toolkit.getDefaultToolkit().createImage("src/Imagenes/tablero.png");
     
     public Tablero(){
-        try{
-            gameFile = new File("Players/"+Menu.userLogged+"/"+Menu.xia.getCode()+"-"+Menu.userLogged2);
-            gameFile.createNewFile();
-            initCuadros();
-            setBounds(0, 0, 540, 600);
-        }catch(IOException e){}
+        initCuadros();
+        setBounds(0, 0, 540, 600);
     }
     
     @Override
@@ -84,6 +78,7 @@ public final class Tablero extends JPanel implements Serializable{
                 contTurnos++;
                 pieces[y][x].setIcon(new ImageIcon(((Ficha)pieces[y][x]).icon()));
                 pieces[y][x].addMouseListener(new PressedMouse());
+                pieces[y][x].setBounds(x*60, y*60, 60, 60);
                 add(pieces[y][x]);
             }
             if(contTurnos == 36)
@@ -125,6 +120,8 @@ public final class Tablero extends JPanel implements Serializable{
                     }
                 }
             }
+            String user = (t==1 ? Menu.userLogged : Menu.userLogged2);
+            Game.setTurnoText(user);
         }
     }
     
@@ -296,9 +293,11 @@ public final class Tablero extends JPanel implements Serializable{
         for(int y = 0; y<10; y++){
             for(int x = 0; x<9; x++){
                 pieces[y][x].addMouseListener(new PressedMouse());
+                pieces[y][x].setBounds(x*60, y*60, 60, 60);
                 add(pieces[y][x]);
             }
         }
+        repaint();
         revalidate();
     }
     
@@ -334,28 +333,41 @@ public final class Tablero extends JPanel implements Serializable{
             
             String victory = winner+" has won the game against "+loser+". "+winner+" has gained 3 points.";
             
+            new File(Menu.path).delete();
             Menu.xia.addPoints(winner, victory);
             Menu.xia.saveLogs(victory);
             Menu.menu.setPanel(new MenuPrincipal());
         }
     }
     
-    public void saveGame(){
-        try{
-            try (FileOutputStream file = new FileOutputStream(gameFile); 
-                    ObjectOutputStream data = new ObjectOutputStream(file)) {
-                
-                data.writeObject(this);
-            }
-        }catch(IOException | NullPointerException e){System.out.println(e.getMessage());}
+    public static void newGame(String user) throws IOException{
+        Menu.userLogged2 = user;
+        Menu.path = "Players/"+Menu.userLogged+"/"+Menu.xia.getCode()+"-"+user;
+        FileOutputStream file = new FileOutputStream(Menu.path);
+        ObjectOutputStream data = new ObjectOutputStream(file);
+        data.writeObject(new Tablero());
+        Menu.tablero = new Tablero();
+        data.close();
+        file.close();
+    }
+    
+    public void saveGame() throws IOException{
+        FileOutputStream file = new FileOutputStream(Menu.path); 
+        ObjectOutputStream data = new ObjectOutputStream(file);
+        data.reset();
+        data.writeObject(this);
+        file.close();
+        data.close();
     }
     
     public static Tablero loadGame(String path) throws IOException, ClassNotFoundException{
         String[] game = path.split("-");
         Menu.userLogged2 = game[1];
-        FileInputStream file = new FileInputStream("Players/"+game[1]+"/"+Menu.xia.getFile(game));
+        String fileName = Menu.xia.getFileName(game);
+        Menu.path = "Players/"+Menu.userLogged+"/"+fileName;
+        FileInputStream file = new FileInputStream(Menu.path);
         ObjectInputStream data = new ObjectInputStream(file);
-        Tablero tab = (Tablero)data.readObject();
+        Tablero tab = (Tablero)data.readObject();        
         return tab;
     }
 }

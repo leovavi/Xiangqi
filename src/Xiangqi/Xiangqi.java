@@ -7,19 +7,15 @@ package Xiangqi;
 
 import Errores.PasswordLengthException;
 import Errores.UserAlreadyExistsException;
-import Fichas.Ficha;
 import Visual.JugarXiangqi;
 import Visual.Menu;
 import Visual.MenuInicio;
 import Visual.MenuPrincipal;
 import Visual.PlayersAvailable;
-import Visual.Tablero;
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.io.ObjectOutputStream;
 import java.io.RandomAccessFile;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -196,6 +192,7 @@ public final class Xiangqi implements Saveable{
         if(pass.equals(players.readUTF())){
             closeRAF();
             deleteGamesInvolved(new File(ROOT), u);
+            closeRAF();
             deleteFiles(new File(ROOT+u));
             players.skipBytes(12);
             players.writeBoolean(false);
@@ -212,11 +209,12 @@ public final class Xiangqi implements Saveable{
      * @throws IOException 
      */
     public final void deleteFiles(File file) throws IOException{
-        if(file.isDirectory())
+        if(file.isDirectory()){
             for(File f : file.listFiles()){
                 deleteFiles(f);
                 f.delete();
             }
+        }
         file.delete();
     }
     /**
@@ -239,7 +237,7 @@ public final class Xiangqi implements Saveable{
      * @param path Arreglo cuyo String ha sido splitted.
      * @return 
      */
-    public final String getFile(String[] path){
+    public final String getFileName(String[] path){
         File listGames = new File(ROOT+Menu.userLogged);
         String gameF = "";
         for(File f : listGames.listFiles()){
@@ -260,7 +258,7 @@ public final class Xiangqi implements Saveable{
      */
     public final void deleteGame(String game){
         String[] gameName = game.split("-");
-        String path = ROOT+Menu.userLogged+"/"+getFile(gameName);
+        String path = ROOT+Menu.userLogged+"/"+getFileName(gameName);
         File gameFile = new File(path);
         int confirm = JOptionPane.showConfirmDialog(Menu.menu, "Are you sure?", "Delete Game", JOptionPane.YES_NO_CANCEL_OPTION);
         
@@ -293,15 +291,14 @@ public final class Xiangqi implements Saveable{
     }
     /**
      * @param t Turno Actual para verificar quien se rindió
-     * @param file Archivo de partida a eliminar
      */
-    public final void surrender(int t, File file){
+    public final void surrender(int t){
         int confirm = JOptionPane.showConfirmDialog(Menu.menu, "Are You Sure?", "Surrender",JOptionPane.YES_NO_CANCEL_OPTION);
         if(confirm==JOptionPane.YES_OPTION){
             String user1 = (t==1 ? Menu.userLogged : Menu.userLogged2);
             String user2 = (t==1 ? Menu.userLogged2 : Menu.userLogged);
             String msg = user1+" has retired, congratulations "+user2+". "+user2+" has gained 3 points";
-            file.delete();
+            new File(Menu.path).delete();
             addPoints(user2, msg);
             saveLogs(msg);
             Menu.menu.setPanel(new MenuPrincipal());
