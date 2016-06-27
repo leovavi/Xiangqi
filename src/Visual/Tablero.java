@@ -33,7 +33,7 @@ public final class Tablero extends JPanel implements Serializable{
     File gameFile;
     JLabel[][] pieces = new Ficha[10][9];
     GridLayout gridLayout = new GridLayout(10, 9);
-    Image background = Toolkit.getDefaultToolkit().createImage("src/Imagenes/tablero.png");
+    transient Image background = Toolkit.getDefaultToolkit().createImage("src/Imagenes/tablero.png");
     
     public Tablero(){
         try{
@@ -341,26 +341,21 @@ public final class Tablero extends JPanel implements Serializable{
     }
     
     public void saveGame(){
-        try(FileOutputStream file = new FileOutputStream(gameFile); 
-            ObjectOutputStream data = new ObjectOutputStream(file)){
-            Ficha[][] fichas = new Ficha[10][9];
-            for(int y = 0; y<10; y++)
-                for(int x = 0; x<9; x++)
-                    fichas[y][x] = (Ficha)pieces[y][x];
-            
-            data.writeObject(new Games(Menu.userLogged2, t, gameFile, fichas));
-        }catch(IOException | NullPointerException e){System.out.println("Error: "+e.getMessage());}
+        try{
+            try (FileOutputStream file = new FileOutputStream(gameFile); 
+                    ObjectOutputStream data = new ObjectOutputStream(file)) {
+                
+                data.writeObject(this);
+            }
+        }catch(IOException | NullPointerException e){System.out.println(e.getMessage());}
     }
     
-    public void loadGame(String path) throws IOException, ClassNotFoundException{
+    public static Tablero loadGame(String path) throws IOException, ClassNotFoundException{
         String[] game = path.split("-");
-        FileInputStream file = new FileInputStream(Menu.xia.getFile(game));
+        Menu.userLogged2 = game[1];
+        FileInputStream file = new FileInputStream("Players/"+game[1]+"/"+Menu.xia.getFile(game));
         ObjectInputStream data = new ObjectInputStream(file);
-        Games games = (Games)data.readObject();
-        Menu.userLogged2 = games.oppUser;
-        t = games.turno;
-        gameFile = games.file;
-        pieces = games.fichas;
-        refresh();
+        Tablero tab = (Tablero)data.readObject();
+        return tab;
     }
 }

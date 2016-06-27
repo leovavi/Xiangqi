@@ -83,7 +83,11 @@ public class LoadGame extends javax.swing.JPanel {
 
     private void loadGameListMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_loadGameListMouseClicked
         if(!(loadGameList.getSelectedValue().equals("")))
-            Menu.menu.setPanel(new Game(loadGameList.getSelectedValue()));
+            try {
+                Menu.menu.setPanel(new Game(Tablero.loadGame(loadGameList.getSelectedValue())));
+        } catch (IOException | ClassNotFoundException e) {
+                System.out.println(e.getMessage());
+        }
     }//GEN-LAST:event_loadGameListMouseClicked
 
 

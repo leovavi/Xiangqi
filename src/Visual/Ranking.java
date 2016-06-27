@@ -61,6 +61,7 @@ public class Ranking extends javax.swing.JPanel {
         add(rankingLabel);
         rankingLabel.setBounds(520, 260, 90, 40);
 
+        rankingTable.setFont(new java.awt.Font("Chinese Takeaway", 0, 14)); // NOI18N
         rankingTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},

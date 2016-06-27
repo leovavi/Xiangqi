@@ -78,7 +78,7 @@ public class PlayersAvailable extends javax.swing.JPanel {
     private void playersListMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_playersListMouseClicked
         if(!playersList.getSelectedValue().equals("")){
             Menu.userLogged2 = playersList.getSelectedValue();
-            Menu.menu.setPanel(new Game(null));
+            Menu.menu.setPanel(new Game(new Tablero()));
         }            
     }//GEN-LAST:event_playersListMouseClicked
 

@@ -11,7 +11,7 @@ public final class FichaVacia extends Ficha{
 
     @Override
     public String icon() {
-        return "Icon";
+        return "src/Imagenes/Fichas/SinFondo.png";
     }
     
     @Override

@@ -18,18 +18,13 @@ public final class Game extends javax.swing.JPanel {
     BufferedImage bi;
     /**
      * Creates new form Game
-     * @param path
+     * @param t
      */
-    public Game(String path) {
-        try{
-            initComponents();
-            setTableroPanel(tab);
-            if(path!=null)
-                tab.loadGame(path);
-            tab.refresh();
-            userLoggedLabel.setText(Menu.userLogged);
-            userLogged2Label.setText(Menu.userLogged2);
-        }catch(IOException | ClassNotFoundException e){}
+    public Game(Tablero t) {
+        initComponents();
+        setTableroPanel(t);
+        userLoggedLabel.setText(Menu.userLogged);
+        userLogged2Label.setText(Menu.userLogged2);
     }
 
     public void setTableroPanel(JPanel panel){
@@ -116,7 +111,7 @@ public final class Game extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnSurrenderActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSurrenderActionPerformed
-        Menu.xia.surrender(tab.t);
+        Menu.xia.surrender(tab.t, tab.gameFile);
     }//GEN-LAST:event_btnSurrenderActionPerformed
 
     private void btnSaveQuitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSaveQuitActionPerformed

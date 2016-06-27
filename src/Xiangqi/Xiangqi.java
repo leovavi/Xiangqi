@@ -30,10 +30,10 @@ import javax.swing.JOptionPane;
  *
  * @author Renan
  */
-public class Xiangqi implements Saveable{
+public final class Xiangqi implements Saveable{
     public RandomAccessFile players, logsU1, logsU2, code;
     String[] plyrs;
-    int[] puntos;
+    int[] pts;
     private static final int PASS_LENGTH = 5;
     private static final String ROOT = "Players/";
     
@@ -41,11 +41,12 @@ public class Xiangqi implements Saveable{
      * Crear el archivo players.xia cuyo formato será
      * 
      * Players.xia
-     * Username
-     * Password (5 caracteres únicamente)
-     * Puntos(int)
-     * Fecha de Ingreso (Formato Date)
-     * Actividad (por default true)
+     * FORMATO:
+     *  Username
+     *  Password (5 caracteres únicamente)
+     *  Puntos(int)
+     *  Fecha de Ingreso (Formato Date)
+     *  Actividad (por default true)
      */
     
     public Xiangqi(){
@@ -56,20 +57,30 @@ public class Xiangqi implements Saveable{
             System.out.println(e.getMessage());
         }
     }
-    
-    public void initRAF(String u) throws IOException{
+    /**
+     * @param u User con el que se instancian los RandomAccessFile
+     * @throws IOException 
+     */
+    public final void initRAF(String u) throws IOException{
         new File(ROOT+u).mkdirs();
         logsU1 = new RandomAccessFile(ROOT+u+"/logs", "rw");
         code = new RandomAccessFile(ROOT+"/codes", "rw");
     }
-    
-    public void closeRAF() throws IOException{
+    /**
+     * Cierro todos los RandomAccessFile para eliminar archivos
+     * @throws IOException 
+     */
+    public final void closeRAF() throws IOException{
         logsU1.close();
         if(logsU2!=null)
             logsU2.close();
         code.close();
     }
-    
+    /**
+     * @param u User
+     * @return True si lo encontro; False si no;
+     * @throws IOException 
+     */
     @Override
     public final boolean searchUser(String u) throws IOException{
         players.seek(0);
@@ -86,7 +97,15 @@ public class Xiangqi implements Saveable{
         }
         return false;
     }
-    
+    /**
+     * Escribo en el archivo con user y pass, cualquier error es propagado
+     * @param u
+     * @param pass
+     * @throws UserAlreadyExistsException
+     * @throws PasswordLengthException
+     * @throws IOException
+     * @throws NullPointerException 
+     */
     @Override
     public final void saveUser(String u, String pass) throws UserAlreadyExistsException,PasswordLengthException,IOException,NullPointerException{
         if(u.length()>0){
@@ -105,7 +124,11 @@ public class Xiangqi implements Saveable{
         }else
             throw new NullPointerException("Ingrese un usuario");
     }
-    
+    /**
+     * Escribo un nuevo registro en players.xia. Instancio los RAF's y procedo a MenuPrincipal.
+     * @param user
+     * @param pass 
+     */
     public final void createPlayer(String user, String pass){
         try{
             saveUser(user, pass);
@@ -122,7 +145,11 @@ public class Xiangqi implements Saveable{
             Menu.menu.showMessage(e.getMessage());
         }
     }
-    
+    /**
+     * Verifico datos de usuario exitente para poder Log In.
+     * @param user
+     * @param pass 
+     */
     public final void Login(String user, String pass){
         try{
             if(searchUser(user)){
@@ -136,7 +163,10 @@ public class Xiangqi implements Saveable{
                 Menu.menu.showMessage("User "+user+" not found");
         }catch(IOException e){}
     }
-    
+    /**
+     * Cambia Paswword si y solo si la longitud sigue siendo de 5 caracteres.
+     * @throws PasswordLengthException 
+     */
     public final void changePassword() throws PasswordLengthException{
         try{
             searchUser(Menu.userLogged);
@@ -154,7 +184,11 @@ public class Xiangqi implements Saveable{
                 Menu.menu.showMessage("Invalid Password");
         }catch(IOException e){}   
     }
-        
+    /**
+     * Busco user y elimino todos sus archivos.
+     * @param u
+     * @throws IOException 
+     */
     @Override
     public final void deleteUser(String u) throws IOException{
         searchUser(u);
@@ -172,7 +206,11 @@ public class Xiangqi implements Saveable{
         }else
             Menu.menu.showMessage("Invalid Password!");
     }
-    
+    /**
+     * Elimino todos los archivos que se encuentren en el file recibido de parametro.
+     * @param file
+     * @throws IOException 
+     */
     public final void deleteFiles(File file) throws IOException{
         if(file.isDirectory())
             for(File f : file.listFiles()){
@@ -181,8 +219,12 @@ public class Xiangqi implements Saveable{
             }
         file.delete();
     }
-    
-    public void deleteGamesInvolved(File path, String user){ 
+    /**
+     * Path empieza en Players/; Busca si hay partidas guardadas con el usuario a eliminar y se eliminan dichas partidas.
+     * @param path
+     * @param user 
+     */
+    public final void deleteGamesInvolved(File path, String user){ 
         if(path.isDirectory()){
             for(File child : path.listFiles()){
                 deleteGamesInvolved(child, user);
@@ -192,24 +234,31 @@ public class Xiangqi implements Saveable{
             }
         }
     }
-    
-    public String getFile(String[] path){
+    /**
+     * Busco un archivo en específico.
+     * @param path Arreglo cuyo String ha sido splitted.
+     * @return 
+     */
+    public final String getFile(String[] path){
         File listGames = new File(ROOT+Menu.userLogged);
-        String gameToDelete = "";
+        String gameF = "";
         for(File f : listGames.listFiles()){
             if(!(f.getName().equals("logs"))){
                 String[] gameFile = f.getName().split("-");
                 String gameFileDate = new Date(f.lastModified()).toString();
                 if(gameFile[1].equals(path[1]) && gameFileDate.equals(path[2])){
                     Menu.userLogged2 = path[1];
-                    gameToDelete = f.getName();
+                    gameF = f.getName();
                 }
             }
         }
-        return gameToDelete;
+        return gameF;
     }
-    
-    public void deleteGame(String game){
+    /**
+     * Borro archivo en específico
+     * @param game 
+     */
+    public final void deleteGame(String game){
         String[] gameName = game.split("-");
         String path = ROOT+Menu.userLogged+"/"+getFile(gameName);
         File gameFile = new File(path);
@@ -226,7 +275,11 @@ public class Xiangqi implements Saveable{
             }
         }
     }
-    
+    /**
+     * Sumar puntos a usuario
+     * @param u Usuario ganador
+     * @param msg Mensaje de victoria
+     */
     public final void addPoints(String u, String msg){
         try{
             searchUser(u);
@@ -238,19 +291,25 @@ public class Xiangqi implements Saveable{
             Menu.menu.showMessage(msg);
         }catch(IOException e){}
     }
-    
-    public final void surrender(int t){
+    /**
+     * @param t Turno Actual para verificar quien se rindió
+     * @param file Archivo de partida a eliminar
+     */
+    public final void surrender(int t, File file){
         int confirm = JOptionPane.showConfirmDialog(Menu.menu, "Are You Sure?", "Surrender",JOptionPane.YES_NO_CANCEL_OPTION);
         if(confirm==JOptionPane.YES_OPTION){
             String user1 = (t==1 ? Menu.userLogged : Menu.userLogged2);
             String user2 = (t==1 ? Menu.userLogged2 : Menu.userLogged);
             String msg = user1+" has retired, congratulations "+user2+". "+user2+" has gained 3 points";
+            file.delete();
             addPoints(user2, msg);
             saveLogs(msg);
             Menu.menu.setPanel(new MenuPrincipal());
         }
     }
-    
+    /**
+     * Listar jugadores Oponentes Disponibles
+     */
     @Override
     public final void listUsers() {
         try{
@@ -264,16 +323,21 @@ public class Xiangqi implements Saveable{
             }
         }catch(IOException e){}
     }
-    
-    public void initCode(){
+    /**
+     * Si el archivo codes está vacío, se escribe como primer dato: 1.
+     */
+    public final void initCode(){
         try{
             code = new RandomAccessFile(ROOT+"/codes", "rw");
             if(code.length()==0)
                 code.writeInt(1);
         }catch(IOException e){}
     }
-    
-    public int getCode() throws IOException{
+    /**
+     * @return Codigo de autenticidad a nombre de archivo
+     * @throws IOException 
+     */
+    public final int getCode() throws IOException{
         initCode();
         code.seek(0);
         int cod = code.readInt();
@@ -282,7 +346,9 @@ public class Xiangqi implements Saveable{
         code.close();
         return cod;
     }
-    
+    /**
+     * @param msg Mensage a guardar en el log
+     */
     @Override
     public final void saveLogs(String msg){
         try{
@@ -301,8 +367,9 @@ public class Xiangqi implements Saveable{
             System.out.println(e.getMessage());
         }
     }
-    
-    
+    /**
+     * @param dlm La lista a la cual agregar los logs
+     */
     public final void listLogs(DefaultListModel dlm){
         try{
             ArrayList<Date> dates = new ArrayList<>();
@@ -321,7 +388,9 @@ public class Xiangqi implements Saveable{
                 dlm.addElement(dates.get(x)+" "+msgs.get(x));
         }catch(IOException e){System.out.println(e.getMessage());}
     }
-    
+    /**
+     * Escribir logs en archivo de texto
+     */
     public final void exportLogs(){
         String path = JOptionPane.showInputDialog(Menu.menu, "Path for txt File: ");
         if(path.length()>0){
@@ -336,8 +405,10 @@ public class Xiangqi implements Saveable{
         }else
             Menu.menu.showMessage("Invalid Path!");
     }
-    
-    public void listGames(DefaultListModel dlm){
+    /**
+     * @param dlm Lista a la cual agregar los juegos PENDIENTES de jugador Logged In
+     */
+    public final void listGames(DefaultListModel dlm){
         File game = new File("Players/"+Menu.userLogged);
         int cont = 1;
         game.mkdirs();
@@ -350,29 +421,11 @@ public class Xiangqi implements Saveable{
             }
         }
     }
-    
-    public void saveGame(File gameFile, Ficha[][] pieces, int t){
-        try(FileOutputStream file = new FileOutputStream(gameFile); 
-            ObjectOutputStream data = new ObjectOutputStream(file)){
-            Ficha[][] fichas = new Ficha[10][9];
-            for(int y = 0; y<10; y++)
-                for(int x = 0; x<9; x++)
-                    fichas[y][x] = (Ficha)pieces[y][x];
-            
-            data.writeObject(new Games(Menu.userLogged2, t, gameFile, fichas));
-        }catch(IOException | NullPointerException e){System.out.println("Error: "+e.getMessage());}
-    }
-    
-    public Tablero loadGame(String path) throws IOException, ClassNotFoundException{
-        /*String[] game = path.split("-");
-        FileInputStream file = new FileInputStream(getFile(game));
-        ObjectInputStream data = new ObjectInputStream(file);
-        Tablero tablero = (Tablero)data.readObject();
-        return tablero;*/
-        return null;
-    }
-    
-    public int totalPlayers(){
+    /**
+     * Cantidad de Jugadores Registrados
+     * @return 
+     */
+    public final int totalPlayers(){
         int total = 0;
         try{
             players.seek(0);
@@ -386,11 +439,14 @@ public class Xiangqi implements Saveable{
         }catch(IOException e){}
         return total;
     }
-    
-    public void arrangePlayers() throws IOException{
+    /**
+     * Ordenar Jugadores de maner descendiente concorde a sus respectivos puntos
+     * @throws IOException 
+     */
+    private void arrangePlayers() throws IOException{
         int total = totalPlayers();
         plyrs = new String[total];
-        puntos = new int[total];
+        pts = new int[total];
         int pos = 0;
         
         players.seek(0);
@@ -401,33 +457,36 @@ public class Xiangqi implements Saveable{
             players.readLong();
             if(players.readBoolean()){
                 plyrs[pos] = user;
-                puntos[pos] = points;
+                pts[pos] = points;
                 pos++;
             }
         }
         
         for(int x = 0; x<total; x++){
             for(int y = 1; y<total; y++){
-                if(puntos[y]>puntos[y-1]){
+                if(pts[y]>pts[y-1]){
                     String u = plyrs[y-1];
-                    int tmp = puntos[y-1];
-                    puntos[y-1] = puntos[y];
-                    puntos[y] = tmp;
+                    int tmp = pts[y-1];
+                    pts[y-1] = pts[y];
+                    pts[y] = tmp;
                     plyrs[y-1] = plyrs[y];
                     plyrs[y] = u;
                 }
             }
         }
     }
-    
-    public Object[][] table() throws IOException{
+    /**
+     * @return Tabla de jugadores ordenados de forma descendiente concorde a sus respectivos puntos
+     * @throws IOException 
+     */
+    public final Object[][] table() throws IOException{
         int filas = totalPlayers();
         Object[][] table = new Object[filas][3];
         arrangePlayers();
         for(int x = 0; x<filas; x++){
             table[x][0] = x+1;
             table[x][1] = plyrs[x];
-            table[x][2] = puntos[x];
+            table[x][2] = pts[x];
         }
         return table;
     }

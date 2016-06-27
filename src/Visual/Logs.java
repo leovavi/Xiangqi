@@ -56,7 +56,7 @@ public class Logs extends javax.swing.JPanel {
         jScrollPane1.setViewportView(logList);
 
         add(jScrollPane1);
-        jScrollPane1.setBounds(380, 320, 400, 240);
+        jScrollPane1.setBounds(310, 320, 560, 240);
 
         btnBack.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/back.png"))); // NOI18N
         btnBack.addActionListener(new java.awt.event.ActionListener() {
