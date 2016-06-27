@@ -17,8 +17,10 @@ import java.awt.Toolkit;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.Serializable;
 import javax.swing.ImageIcon;
@@ -35,13 +37,11 @@ public final class Tablero extends JPanel implements Serializable{
     
     public Tablero(){
         try{
-            gameFile = new File("Players/"+Menu.userLogged+"/"+Menu.xia.getCode(Menu.userLogged)+"-"+Menu.userLogged2);
+            gameFile = new File("Players/"+Menu.userLogged+"/"+Menu.xia.getCode()+"-"+Menu.userLogged2);
             gameFile.createNewFile();
             initCuadros();
             setBounds(0, 0, 540, 600);
-        }catch(IOException e){
-            System.out.println(e.getMessage());
-        }
+        }catch(IOException e){}
     }
     
     @Override
@@ -336,16 +336,31 @@ public final class Tablero extends JPanel implements Serializable{
             
             Menu.xia.addPoints(winner, victory);
             Menu.xia.saveLogs(victory);
-            Menu.menu.showMessage(victory);
             Menu.menu.setPanel(new MenuPrincipal());
         }
     }
     
     public void saveGame(){
         try(FileOutputStream file = new FileOutputStream(gameFile); 
-                ObjectOutputStream data = new ObjectOutputStream(file)){
-            data.reset();
-            data.writeObject(new Games(pieces, t));
-        }catch(IOException e){}
+            ObjectOutputStream data = new ObjectOutputStream(file)){
+            Ficha[][] fichas = new Ficha[10][9];
+            for(int y = 0; y<10; y++)
+                for(int x = 0; x<9; x++)
+                    fichas[y][x] = (Ficha)pieces[y][x];
+            
+            data.writeObject(new Games(Menu.userLogged2, t, gameFile, fichas));
+        }catch(IOException | NullPointerException e){System.out.println("Error: "+e.getMessage());}
+    }
+    
+    public void loadGame(String path) throws IOException, ClassNotFoundException{
+        String[] game = path.split("-");
+        FileInputStream file = new FileInputStream(Menu.xia.getFile(game));
+        ObjectInputStream data = new ObjectInputStream(file);
+        Games games = (Games)data.readObject();
+        Menu.userLogged2 = games.oppUser;
+        t = games.turno;
+        gameFile = games.file;
+        pieces = games.fichas;
+        refresh();
     }
 }

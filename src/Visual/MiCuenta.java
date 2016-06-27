@@ -8,7 +8,6 @@ package Visual;
 import Errores.PasswordLengthException;
 import java.io.IOException;
 import java.util.Date;
-import javax.swing.JOptionPane;
 
 /**
  *
@@ -22,7 +21,7 @@ public class MiCuenta extends javax.swing.JPanel {
         initComponents();
         try{
             Menu.xia.searchUser(Menu.userLogged);
-            userLabel.setText("Username: "+Menu.menu.userLogged);
+            userLabel.setText("Username: "+Menu.userLogged);
             Menu.xia.players.readUTF();
             puntosLabel.setText("Puntos: "+Menu.xia.players.readInt());
             fechaLabel.setText("Fecha Creado: "+new Date(Menu.xia.players.readLong()));
@@ -130,7 +129,9 @@ public class MiCuenta extends javax.swing.JPanel {
     private void btnDeleteAccountActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeleteAccountActionPerformed
         try{
             Menu.xia.deleteUser(Menu.userLogged);
-        }catch(IOException e){}
+        }catch(IOException e){
+            System.out.println(e.getMessage());
+        }
     }//GEN-LAST:event_btnDeleteAccountActionPerformed
 
     private void btnChangePasswordActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnChangePasswordActionPerformed

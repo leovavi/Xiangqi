@@ -7,15 +7,19 @@ package Xiangqi;
 
 import Errores.PasswordLengthException;
 import Errores.UserAlreadyExistsException;
+import Fichas.Ficha;
 import Visual.JugarXiangqi;
 import Visual.Menu;
 import Visual.MenuInicio;
 import Visual.MenuPrincipal;
 import Visual.PlayersAvailable;
+import Visual.Tablero;
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.io.ObjectOutputStream;
 import java.io.RandomAccessFile;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -28,9 +32,10 @@ import javax.swing.JOptionPane;
  */
 public class Xiangqi implements Saveable{
     public RandomAccessFile players, logsU1, logsU2, code;
+    String[] plyrs;
+    int[] puntos;
     private static final int PASS_LENGTH = 5;
-    private static Date fechaIngreso;
-    private static String ROOT = "Players/";
+    private static final String ROOT = "Players/";
     
     /**
      * Crear el archivo players.xia cuyo formato será
@@ -55,7 +60,7 @@ public class Xiangqi implements Saveable{
     public void initRAF(String u) throws IOException{
         new File(ROOT+u).mkdirs();
         logsU1 = new RandomAccessFile(ROOT+u+"/logs", "rw");
-        code = new RandomAccessFile(ROOT+u+"/codes", "rw");
+        code = new RandomAccessFile(ROOT+"/codes", "rw");
     }
     
     public void closeRAF() throws IOException{
@@ -107,7 +112,7 @@ public class Xiangqi implements Saveable{
             new File(ROOT+user).mkdirs();
             File logs = new File(ROOT+user+"/logs");
             logs.createNewFile();
-            File codes = new File(ROOT+user+"/codes");
+            File codes = new File(ROOT+"codes");
             codes.createNewFile();
             initRAF(user);
             Menu.userLogged = user;
@@ -161,6 +166,7 @@ public class Xiangqi implements Saveable{
             players.skipBytes(12);
             players.writeBoolean(false);
             Menu.userLogged = null;
+            Menu.userLogged2 = null;
             Menu.menu.showMessage("Account Deleted");
             Menu.menu.setPanel(new MenuInicio());
         }else
@@ -187,10 +193,25 @@ public class Xiangqi implements Saveable{
         }
     }
     
+    public String getFile(String[] path){
+        File listGames = new File(ROOT+Menu.userLogged);
+        String gameToDelete = "";
+        for(File f : listGames.listFiles()){
+            if(!(f.getName().equals("logs"))){
+                String[] gameFile = f.getName().split("-");
+                String gameFileDate = new Date(f.lastModified()).toString();
+                if(gameFile[1].equals(path[1]) && gameFileDate.equals(path[2])){
+                    Menu.userLogged2 = path[1];
+                    gameToDelete = f.getName();
+                }
+            }
+        }
+        return gameToDelete;
+    }
+    
     public void deleteGame(String game){
         String[] gameName = game.split("-");
-        String g = gameName[0]+"-"+gameName[1];
-        String path = ROOT+Menu.userLogged+"/"+g;
+        String path = ROOT+Menu.userLogged+"/"+getFile(gameName);
         File gameFile = new File(path);
         int confirm = JOptionPane.showConfirmDialog(Menu.menu, "Are you sure?", "Delete Game", JOptionPane.YES_NO_CANCEL_OPTION);
         
@@ -244,30 +265,29 @@ public class Xiangqi implements Saveable{
         }catch(IOException e){}
     }
     
-    public void initCode(String u){
+    public void initCode(){
         try{
-            code = new RandomAccessFile(ROOT+u+"/codes", "rw");
+            code = new RandomAccessFile(ROOT+"/codes", "rw");
             if(code.length()==0)
                 code.writeInt(1);
         }catch(IOException e){}
     }
     
-    public int getCode(String u){
-        try{
-            initCode(u);code.seek(0);
-            int cod = code.readInt();
-            code.seek(0);
-            code.writeInt(cod+1);
-            code.close();
-            return cod;
-        }catch(IOException e){}
-        return 0;
+    public int getCode() throws IOException{
+        initCode();
+        code.seek(0);
+        int cod = code.readInt();
+        code.seek(0);
+        code.writeInt(cod+1);
+        code.close();
+        return cod;
     }
     
     @Override
     public final void saveLogs(String msg){
         try{
             initRAF(Menu.userLogged);
+            new File(ROOT+Menu.userLogged2).mkdirs();
             logsU2 = new RandomAccessFile(ROOT+Menu.userLogged2+"/logs", "rw");
             
             logsU1.seek(logsU1.length());
@@ -287,6 +307,8 @@ public class Xiangqi implements Saveable{
         try{
             ArrayList<Date> dates = new ArrayList<>();
             ArrayList<String> msgs = new ArrayList<>();
+            initRAF(Menu.userLogged);
+            
             while(logsU1.getFilePointer()<logsU1.length()){
                 Date date = new Date(logsU1.readLong());
                 String msg = logsU1.readUTF();
@@ -294,10 +316,10 @@ public class Xiangqi implements Saveable{
                 dates.add(date);
                 msgs.add(msg);
             }
-            for(int x = dates.size()-1; x>=0; x--){
+            
+            for(int x = dates.size()-1; x>=0; x--)
                 dlm.addElement(dates.get(x)+" "+msgs.get(x));
-            }
-        }catch(IOException e){}
+        }catch(IOException e){System.out.println(e.getMessage());}
     }
     
     public final void exportLogs(){
@@ -310,7 +332,7 @@ public class Xiangqi implements Saveable{
                     fw.write(" "+logsU1.readUTF()+"\n");
                 }
                 Menu.menu.showMessage("Logs Exported!");
-            }catch(IOException e){}
+            }catch(IOException e){System.out.println(e.getMessage());}
         }else
             Menu.menu.showMessage("Invalid Path!");
     }
@@ -321,11 +343,92 @@ public class Xiangqi implements Saveable{
         game.mkdirs();
         
         for(File g : game.listFiles()){
-            if(!(g.getName().equals("codes")) && !(g.getName().equals("logs"))){
-                String[] gameName = g.getName().split("-");
-                dlm.addElement(cont+"-"+gameName[1]+"-"+new Date(g.lastModified()));
+            if(!(g.getName().equals("logs"))){
+                String[] oppUserName = g.getName().split("-");
+                dlm.addElement(cont+"-"+oppUserName[1]+"-"+new Date(g.lastModified()));
                 cont++;
             }
         }
+    }
+    
+    public void saveGame(File gameFile, Ficha[][] pieces, int t){
+        try(FileOutputStream file = new FileOutputStream(gameFile); 
+            ObjectOutputStream data = new ObjectOutputStream(file)){
+            Ficha[][] fichas = new Ficha[10][9];
+            for(int y = 0; y<10; y++)
+                for(int x = 0; x<9; x++)
+                    fichas[y][x] = (Ficha)pieces[y][x];
+            
+            data.writeObject(new Games(Menu.userLogged2, t, gameFile, fichas));
+        }catch(IOException | NullPointerException e){System.out.println("Error: "+e.getMessage());}
+    }
+    
+    public Tablero loadGame(String path) throws IOException, ClassNotFoundException{
+        /*String[] game = path.split("-");
+        FileInputStream file = new FileInputStream(getFile(game));
+        ObjectInputStream data = new ObjectInputStream(file);
+        Tablero tablero = (Tablero)data.readObject();
+        return tablero;*/
+        return null;
+    }
+    
+    public int totalPlayers(){
+        int total = 0;
+        try{
+            players.seek(0);
+            while(players.getFilePointer()<players.length()){
+                players.readUTF();
+                players.readUTF();
+                players.skipBytes(12);
+                if(players.readBoolean())
+                    total++;
+            }
+        }catch(IOException e){}
+        return total;
+    }
+    
+    public void arrangePlayers() throws IOException{
+        int total = totalPlayers();
+        plyrs = new String[total];
+        puntos = new int[total];
+        int pos = 0;
+        
+        players.seek(0);
+        while(players.getFilePointer()<players.length()){
+            String user = players.readUTF();
+            players.readUTF();
+            int points = players.readInt();
+            players.readLong();
+            if(players.readBoolean()){
+                plyrs[pos] = user;
+                puntos[pos] = points;
+                pos++;
+            }
+        }
+        
+        for(int x = 0; x<total; x++){
+            for(int y = 1; y<total; y++){
+                if(puntos[y]>puntos[y-1]){
+                    String u = plyrs[y-1];
+                    int tmp = puntos[y-1];
+                    puntos[y-1] = puntos[y];
+                    puntos[y] = tmp;
+                    plyrs[y-1] = plyrs[y];
+                    plyrs[y] = u;
+                }
+            }
+        }
+    }
+    
+    public Object[][] table() throws IOException{
+        int filas = totalPlayers();
+        Object[][] table = new Object[filas][3];
+        arrangePlayers();
+        for(int x = 0; x<filas; x++){
+            table[x][0] = x+1;
+            table[x][1] = plyrs[x];
+            table[x][2] = puntos[x];
+        }
+        return table;
     }
 }

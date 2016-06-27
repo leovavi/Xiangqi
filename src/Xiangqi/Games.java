@@ -5,22 +5,24 @@
  */
 package Xiangqi;
 
-import java.util.Calendar;
-import java.util.Date;
-import javax.swing.JLabel;
+import Fichas.Ficha;
+import java.io.File;
+import java.io.Serializable;
 
 /**
  *
  * @author Leovavi
  */
-public class Games {
-    int turno;
-    JLabel[][] pieces;
-    Date lastModified;
+public class Games implements Serializable{
+    public String oppUser;
+    public int turno;
+    public File file;
+    public Ficha[][] fichas;
     
-    public Games(JLabel[][] pieces, int t){
-        turno = t;
-        this.pieces = pieces;
-        lastModified = new Date(Calendar.getInstance().getTimeInMillis());
+    public Games(String oppUser, int turno, File file, Ficha[][] fichas){
+        this.oppUser = oppUser;
+        this.turno = turno;
+        this.file = file;
+        this.fichas = fichas;
     }
 }

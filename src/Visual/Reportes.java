@@ -71,8 +71,7 @@ public class Reportes extends javax.swing.JPanel {
     }//GEN-LAST:event_btnBackActionPerformed
 
     private void btnRankingActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRankingActionPerformed
-        Menu.menu.showMessage("PROXIMAMENTE ESTARA DISPONIBLE");
-        //Menu.menu.setPanel(new Ranking());
+        Menu.menu.setPanel(new Ranking());
     }//GEN-LAST:event_btnRankingActionPerformed
 
     private void btnLogsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLogsActionPerformed

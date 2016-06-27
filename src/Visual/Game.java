@@ -5,8 +5,8 @@
  */
 package Visual;
 
-import Xiangqi.Games;
 import java.awt.image.BufferedImage;
+import java.io.IOException;
 import javax.swing.JPanel;
 
 /**
@@ -18,12 +18,18 @@ public final class Game extends javax.swing.JPanel {
     BufferedImage bi;
     /**
      * Creates new form Game
+     * @param path
      */
-    public Game() {
-        initComponents();
-        setTableroPanel(tab);
-        userLoggedLabel.setText(Menu.userLogged);
-        userLogged2Label.setText(Menu.userLogged2);
+    public Game(String path) {
+        try{
+            initComponents();
+            setTableroPanel(tab);
+            if(path!=null)
+                tab.loadGame(path);
+            tab.refresh();
+            userLoggedLabel.setText(Menu.userLogged);
+            userLogged2Label.setText(Menu.userLogged2);
+        }catch(IOException | ClassNotFoundException e){}
     }
 
     public void setTableroPanel(JPanel panel){
@@ -119,11 +125,7 @@ public final class Game extends javax.swing.JPanel {
     }//GEN-LAST:event_btnSaveQuitActionPerformed
 
     private void btnSaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSaveActionPerformed
-        try{
-            tab.saveGame();
-        }catch(NullPointerException e){
-            System.out.println(e.getMessage());
-        }
+        tab.saveGame();
     }//GEN-LAST:event_btnSaveActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
