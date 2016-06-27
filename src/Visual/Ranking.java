@@ -5,6 +5,9 @@
  */
 package Visual;
 
+import java.io.IOException;
+import javax.swing.table.DefaultTableModel;
+
 /**
  *
  * @author Leovavi
@@ -16,6 +19,14 @@ public class Ranking extends javax.swing.JPanel {
      */
     public Ranking() {
         initComponents();
+        initTable();
+    }
+    
+    public void initTable(){
+        try{
+            String[] titles = {"Position", "Player", "Points"};
+            rankingTable.setModel(new DefaultTableModel(Menu.xia.table(), titles));
+        }catch(IOException e){}
     }
 
     /**
@@ -50,6 +61,7 @@ public class Ranking extends javax.swing.JPanel {
         add(rankingLabel);
         rankingLabel.setBounds(520, 260, 90, 40);
 
+        rankingTable.setFont(new java.awt.Font("Chinese Takeaway", 0, 14)); // NOI18N
         rankingTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},

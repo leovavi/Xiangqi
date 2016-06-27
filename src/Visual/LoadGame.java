@@ -5,17 +5,23 @@
  */
 package Visual;
 
+import java.io.IOException;
+import javax.swing.DefaultListModel;
+
 /**
  *
  * @author Leovavi
  */
 public class LoadGame extends javax.swing.JPanel {
-
+    public static DefaultListModel dlm;
     /**
      * Creates new form Games
      */
     public LoadGame() {
         initComponents();
+        dlm = new DefaultListModel();
+        Menu.xia.listGames(dlm);
+        loadGameList.setModel(dlm);
     }
 
     /**
@@ -50,10 +56,16 @@ public class LoadGame extends javax.swing.JPanel {
         add(gamesLabel);
         gamesLabel.setBounds(520, 260, 80, 40);
 
+        loadGameList.setFont(new java.awt.Font("Chinese Takeaway", 0, 18)); // NOI18N
         loadGameList.setModel(new javax.swing.AbstractListModel<String>() {
             String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
             public int getSize() { return strings.length; }
             public String getElementAt(int i) { return strings[i]; }
+        });
+        loadGameList.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                loadGameListMouseClicked(evt);
+            }
         });
         jScrollPane1.setViewportView(loadGameList);
 
@@ -68,6 +80,18 @@ public class LoadGame extends javax.swing.JPanel {
     private void btnBackActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBackActionPerformed
         Menu.menu.setPanel(new JugarXiangqi());
     }//GEN-LAST:event_btnBackActionPerformed
+
+    private void loadGameListMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_loadGameListMouseClicked
+        if(!(loadGameList.getSelectedValue().equals(""))){
+            try {
+                Tablero t = Tablero.loadGame(loadGameList.getSelectedValue());
+                Menu.tablero = t;
+                Menu.menu.setPanel(new Game());
+            } catch (IOException | ClassNotFoundException e) {
+                System.out.println(e.getMessage());
+            }
+        }
+    }//GEN-LAST:event_loadGameListMouseClicked
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

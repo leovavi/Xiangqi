@@ -5,14 +5,14 @@
  */
 package Visual;
 
-import java.util.NoSuchElementException;
-
 /**
  *
  * @author Leovavi
  */
 public class JugarXiangqi extends javax.swing.JPanel {
-
+    PlayersAvailable PA = new PlayersAvailable();
+    LoadGame LG = new LoadGame();
+    DeleteGame DG = new DeleteGame();
     /**
      * Creates new form JugarXiangqi
      */
@@ -83,22 +83,24 @@ public class JugarXiangqi extends javax.swing.JPanel {
     }//GEN-LAST:event_btnBackActionPerformed
 
     private void btnNuevaPartidaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNuevaPartidaActionPerformed
-        try{
-            if(PlayersAvailable.pa.dlm.firstElement()!=null);
-                Menu.menu.setPanel(new PlayersAvailable());
-        }catch(NullPointerException | NoSuchElementException e){
+        if(!PA.dlm.isEmpty())
+            Menu.menu.setPanel(new PlayersAvailable());
+        else
             Menu.menu.showMessage("No Players Available");
-        }
     }//GEN-LAST:event_btnNuevaPartidaActionPerformed
 
     private void btnCargarPartidaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCargarPartidaActionPerformed
-        Menu.menu.showMessage("PROXIMAMENTE ESTARA DISPONIBLE");
-        //Menu.menu.setPanel(new LoadGame());
+        if(!LG.dlm.isEmpty())
+            Menu.menu.setPanel(new LoadGame());
+        else
+            Menu.menu.showMessage("No Games Available");
     }//GEN-LAST:event_btnCargarPartidaActionPerformed
 
     private void btnEliminarPartidaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarPartidaActionPerformed
-        Menu.menu.showMessage("PROXIMAMENTE ESTARA DISPONIBLE");
-        //Menu.menu.setPanel(new DeleteGame());
+        if(!DG.dlm.isEmpty())
+            Menu.menu.setPanel(new DeleteGame());
+        else
+            Menu.menu.showMessage("No Games Available");
     }//GEN-LAST:event_btnEliminarPartidaActionPerformed
 
 

@@ -6,7 +6,8 @@
 package Visual;
 
 import Errores.PasswordLengthException;
-import javax.swing.JOptionPane;
+import java.io.IOException;
+import java.util.Date;
 
 /**
  *
@@ -18,8 +19,13 @@ public class MiCuenta extends javax.swing.JPanel {
      */
     public MiCuenta() {
         initComponents();
-        userLabel.setText("Username: "+Menu.menu.userLogged.getUser());
-        fechaLabel.setText("Fecha Creado: "+Menu.menu.userLogged.getDate());
+        try{
+            Menu.xia.searchUser(Menu.userLogged);
+            userLabel.setText("Username: "+Menu.userLogged);
+            Menu.xia.players.readUTF();
+            puntosLabel.setText("Puntos: "+Menu.xia.players.readInt());
+            fechaLabel.setText("Fecha Creado: "+new Date(Menu.xia.players.readLong()));
+        }catch(IOException e){}
     }
 
     /**
@@ -121,12 +127,16 @@ public class MiCuenta extends javax.swing.JPanel {
     }//GEN-LAST:event_btnConnectFacebookActionPerformed
 
     private void btnDeleteAccountActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeleteAccountActionPerformed
-        Menu.menu.showMessage("PROXIMAMENTE ESTARÄ DISPONIBLE");
+        try{
+            Menu.xia.deleteUser(Menu.userLogged);
+        }catch(IOException e){
+            System.out.println(e.getMessage());
+        }
     }//GEN-LAST:event_btnDeleteAccountActionPerformed
 
     private void btnChangePasswordActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnChangePasswordActionPerformed
         try{
-            Menu.menu.userLogged.setPass(JOptionPane.showInputDialog(Menu.menu, "New Password: "));
+            Menu.xia.changePassword();
         }catch(PasswordLengthException e){
             Menu.menu.showMessage(e.getMessage());
         }

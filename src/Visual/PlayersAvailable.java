@@ -5,8 +5,7 @@
  */
 package Visual;
 
-import Errores.UserAlreadyExistsException;
-import Xiangqi.Login;
+import java.io.IOException;
 import javax.swing.DefaultListModel;
 
 /**
@@ -14,16 +13,14 @@ import javax.swing.DefaultListModel;
  * @author Leovavi
  */
 public class PlayersAvailable extends javax.swing.JPanel {
-    static PlayersAvailable pa = new PlayersAvailable();
-    DefaultListModel dlm = new DefaultListModel();
+    public static DefaultListModel dlm;
     /**
      * Creates new form PlayersAvailable
      */
     public PlayersAvailable() {
         initComponents();
-        for(Login p : Menu.menu.ul.users)
-            if(!p.getUser().equals(Menu.userLogged.getUser()))
-                dlm.addElement(p.getUser());
+        dlm = new DefaultListModel();
+        Menu.xia.listUsers();
         playersList.setModel(dlm);
     }
 
@@ -51,7 +48,6 @@ public class PlayersAvailable extends javax.swing.JPanel {
         PlayersLabel.setBounds(470, 260, 220, 40);
 
         playersList.setFont(new java.awt.Font("Chinese Takeaway", 2, 14)); // NOI18N
-        playersList.setModel(new DefaultListModel());
         playersList.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 playersListMouseClicked(evt);
@@ -81,12 +77,12 @@ public class PlayersAvailable extends javax.swing.JPanel {
     }//GEN-LAST:event_btnBackActionPerformed
 
     private void playersListMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_playersListMouseClicked
-        try{
-            Menu.userLogged2 = Menu.ul.searchUser(playersList.getSelectedValue());
-            Menu.menu.setPanel(new Game());
-        }catch(UserAlreadyExistsException e){
-            System.out.println("No pasa");
-        }
+        if(!playersList.getSelectedValue().equals("")){
+            try {
+                Tablero.newGame(playersList.getSelectedValue());
+                Menu.menu.setPanel(new Game());
+            } catch (IOException e) {}
+        }            
     }//GEN-LAST:event_playersListMouseClicked
 
 

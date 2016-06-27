@@ -6,27 +6,35 @@
 package Visual;
 
 import java.awt.Container;
+import java.io.IOException;
+import javax.swing.JPanel;
 
 /**
  *
  * @author Leovavi
  */
-public class Game extends javax.swing.JPanel {
-    static Game game = new Game();
+public final class Game extends javax.swing.JPanel {
     /**
      * Creates new form Game
      */
     public Game() {
         initComponents();
-        setContainer(new Tablero().cont);
+        setTableroPanel(Menu.tablero);
+        userLoggedLabel.setText(Menu.userLogged);
+        userLogged2Label.setText(Menu.userLogged2);
     }
 
-    public void setContainer(Container contNuevo){
+    public static void setTableroPanel(JPanel pan){
         tablero.removeAll();
-        tablero.add(contNuevo);
+        tablero.add(pan);
         tablero.repaint();
         tablero.revalidate();
     }
+    
+    public static void setTurnoText(String u){
+        turnoLabel.setText("Turno Actual: "+u);
+    }
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -37,21 +45,27 @@ public class Game extends javax.swing.JPanel {
     private void initComponents() {
 
         tablero = new javax.swing.JPanel();
-        tableroPaint = new javax.swing.JLabel();
         btnSaveQuit = new javax.swing.JButton();
         btnSurrender = new javax.swing.JButton();
+        userLogged2Label = new javax.swing.JLabel();
+        userLoggedLabel = new javax.swing.JLabel();
+        btnSave = new javax.swing.JButton();
+        turnoLabel = new javax.swing.JLabel();
         MainLabel = new javax.swing.JLabel();
 
         setLayout(null);
 
+        tablero.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tableroMouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                tableroMouseEntered(evt);
+            }
+        });
         tablero.setLayout(null);
-
-        tableroPaint.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/tablero.png"))); // NOI18N
-        tablero.add(tableroPaint);
-        tableroPaint.setBounds(0, 0, 542, 600);
-
         add(tablero);
-        tablero.setBounds(330, 30, 540, 600);
+        tablero.setBounds(325, 30, 540, 600);
 
         btnSaveQuit.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/saveQuit.png"))); // NOI18N
         btnSaveQuit.addActionListener(new java.awt.event.ActionListener() {
@@ -69,28 +83,71 @@ public class Game extends javax.swing.JPanel {
             }
         });
         add(btnSurrender);
-        btnSurrender.setBounds(20, 530, 200, 40);
+        btnSurrender.setBounds(20, 470, 200, 40);
 
-        MainLabel.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/background.png"))); // NOI18N
+        userLogged2Label.setFont(new java.awt.Font("Chinese Takeaway", 2, 18)); // NOI18N
+        userLogged2Label.setText("User Logged 2");
+        add(userLogged2Label);
+        userLogged2Label.setBounds(940, 40, 180, 40);
+
+        userLoggedLabel.setFont(new java.awt.Font("Chinese Takeaway", 2, 18)); // NOI18N
+        userLoggedLabel.setText("User Logged");
+        add(userLoggedLabel);
+        userLoggedLabel.setBounds(40, 40, 180, 40);
+
+        btnSave.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/save.png"))); // NOI18N
+        btnSave.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnSaveActionPerformed(evt);
+            }
+        });
+        add(btnSave);
+        btnSave.setBounds(20, 530, 200, 40);
+
+        turnoLabel.setFont(new java.awt.Font("Chinese Takeaway", 0, 18)); // NOI18N
+        turnoLabel.setText("TURNO");
+        add(turnoLabel);
+        turnoLabel.setBounds(40, 200, 260, 40);
+
+        MainLabel.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/tabBackground.png"))); // NOI18N
         add(MainLabel);
         MainLabel.setBounds(0, 0, 1150, 650);
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnSurrenderActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSurrenderActionPerformed
-        Menu.menu.showMessage(Menu.userLogged.getUser()+" has retired, congratulations "+Menu.userLogged2.getUser());
-        Menu.menu.setPanel(new MenuPrincipal());
+        Menu.xia.surrender(Menu.tablero.t);
     }//GEN-LAST:event_btnSurrenderActionPerformed
 
     private void btnSaveQuitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSaveQuitActionPerformed
-        //Aunque por los momentos solo se sale de la pantalla
-        Menu.menu.setPanel(new MenuPrincipal());
+        try{
+            Menu.tablero.saveGame();
+            Menu.menu.setPanel(new MenuPrincipal());
+        }catch(IOException e){}
     }//GEN-LAST:event_btnSaveQuitActionPerformed
 
+    private void btnSaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSaveActionPerformed
+        try{
+            Menu.tablero.saveGame();
+        }catch(IOException e){}
+    }//GEN-LAST:event_btnSaveActionPerformed
+
+    private void tableroMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tableroMouseEntered
+        String user = (Menu.tablero.t==1 ? Menu.userLogged : Menu.userLogged2);
+        turnoLabel.setText("Turno Actual: "+user);
+    }//GEN-LAST:event_tableroMouseEntered
+
+    private void tableroMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tableroMouseClicked
+        // TODO add your handling code here:
+    }//GEN-LAST:event_tableroMouseClicked
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JLabel MainLabel;
+    private static javax.swing.JLabel MainLabel;
+    private javax.swing.JButton btnSave;
     private javax.swing.JButton btnSaveQuit;
     private javax.swing.JButton btnSurrender;
-    private javax.swing.JPanel tablero;
-    private javax.swing.JLabel tableroPaint;
+    public static javax.swing.JPanel tablero;
+    public static javax.swing.JLabel turnoLabel;
+    private javax.swing.JLabel userLogged2Label;
+    private javax.swing.JLabel userLoggedLabel;
     // End of variables declaration//GEN-END:variables
 }

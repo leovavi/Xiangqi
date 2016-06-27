@@ -1,12 +1,5 @@
 package Visual;
 
-import Errores.PasswordLengthException;
-import Errores.UserAlreadyExistsException;
-import Xiangqi.Login;
-import Xiangqi.UserList;
-import javax.swing.JFrame;
-import javax.swing.JPanel;
-
 public class MenuInicio extends javax.swing.JPanel {
     /**
      * Creates new form MenuInicio
@@ -82,9 +75,7 @@ public class MenuInicio extends javax.swing.JPanel {
         add(LabelUserForm);
         LabelUserForm.setBounds(430, 240, 310, 240);
 
-        MainLabel.setBackground(new java.awt.Color(0, 153, 153));
         MainLabel.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/MainBackground.png"))); // NOI18N
-        MainLabel.setText("jLabel1");
         add(MainLabel);
         MainLabel.setBounds(0, 0, 1150, 650);
     }// </editor-fold>//GEN-END:initComponents
@@ -95,35 +86,14 @@ public class MenuInicio extends javax.swing.JPanel {
 
     private void btnLogInActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLogInActionPerformed
         String user = userTF.getText();
-        String pass = passTF.getText();
-        try{
-            Login log = Menu.menu.ul.searchUser(user);
-            if(log.getPass().equals(pass)){
-                Menu.userLogged = log;
-                Menu.menu.setPanel(new MenuPrincipal());
-            }else
-                Menu.menu.showMessage("Invalid Password");
-        }catch(UserAlreadyExistsException e){
-            Menu.menu.showMessage(e.getMessage());
-        }catch(NullPointerException e){
-            Menu.menu.showMessage("User "+user+" Not Found");
-        }
+        String pass = String.valueOf(passTF.getPassword());
+        Menu.xia.Login(user, pass);
     }//GEN-LAST:event_btnLogInActionPerformed
 
     private void btnCreatePlayerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCreatePlayerActionPerformed
         String user = userTF.getText();
         String pass = String.valueOf(passTF.getPassword());
-        try{
-            Menu.ul.saveUser(user, pass);
-            Menu.menu.showMessage("User Created!");
-            Login log = Menu.ul.searchUser(user);
-            if(log!=null){
-                Menu.userLogged = log;
-                Menu.menu.setPanel(new MenuPrincipal());
-            }
-        }catch(PasswordLengthException | UserAlreadyExistsException e){
-            Menu.menu.showMessage(e.getMessage());
-        }
+        Menu.xia.createPlayer(user, pass);
     }//GEN-LAST:event_btnCreatePlayerActionPerformed
 
 

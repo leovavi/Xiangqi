@@ -5,17 +5,22 @@
  */
 package Visual;
 
+import javax.swing.DefaultListModel;
+
 /**
  *
  * @author Leovavi
  */
 public class DeleteGame extends javax.swing.JPanel {
-
+    public static DefaultListModel dlm;
     /**
      * Creates new form DeleteGame
      */
     public DeleteGame() {
         initComponents();
+        dlm = new DefaultListModel();
+        Menu.xia.listGames(dlm);
+        deleteGameList.setModel(dlm);
     }
 
     /**
@@ -41,10 +46,16 @@ public class DeleteGame extends javax.swing.JPanel {
         add(gamesLabel);
         gamesLabel.setBounds(520, 260, 80, 40);
 
+        deleteGameList.setFont(new java.awt.Font("Chinese Takeaway", 0, 18)); // NOI18N
         deleteGameList.setModel(new javax.swing.AbstractListModel<String>() {
             String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
             public int getSize() { return strings.length; }
             public String getElementAt(int i) { return strings[i]; }
+        });
+        deleteGameList.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                deleteGameListMouseClicked(evt);
+            }
         });
         jScrollPane1.setViewportView(deleteGameList);
 
@@ -68,6 +79,11 @@ public class DeleteGame extends javax.swing.JPanel {
     private void btnBackActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBackActionPerformed
         Menu.menu.setPanel(new JugarXiangqi());
     }//GEN-LAST:event_btnBackActionPerformed
+
+    private void deleteGameListMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_deleteGameListMouseClicked
+        if(!(deleteGameList.getSelectedValue().equals("")))
+            Menu.xia.deleteGame(deleteGameList.getSelectedValue());
+    }//GEN-LAST:event_deleteGameListMouseClicked
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

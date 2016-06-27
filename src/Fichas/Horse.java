@@ -9,25 +9,26 @@ package Fichas;
  *
  * @author Leovavi
  */
-public class Horse extends Ficha{
-    public Horse(String name){
-        super(name);
+public final class Horse extends Ficha{
+    public Horse(String name, int turno){
+        super(name, turno);
     }
 
     @Override
-    public void move() {
-
-    }
-
-    @Override
-    public boolean validarMove() {
-        return true;
+    public boolean validarMove(int x, int y, int x1, int y1) {
+        return ((x+1)==x1 && ((y+2)==y1 || (y-2)==y1)) || ((x-1)==x1 && ((y+2)==y1 || (y-2)==y1)) || 
+               ((y+1)==y1 && ((x+2)==x1 || (x-2)==x1)) || ((y-1)==y1 && ((x+2)==x1 || (x-2)==x1));
     }
 
     @Override
     public String icon() {
-        if(turno == 1)
-            return "/Imagenes/Fichas/HorseR.png";
-        return "/Imagenes/Fichas/HorseB.png";
+        return "src/Imagenes/Fichas/Horse"+getColor()+".png";
+    }
+    
+    @Override
+    public boolean insideFort(int x, int y){            
+        return (x==3 && (y==0 || y==9)) || (x==4 && (y==0 || y==9)) || (x==5 && (y==0 || y==9)) ||
+               (x==3 && (y==1 || y==8)) || (x==4 && (y==1 || y==8)) || (x==5 && (y==1 || y==8)) ||
+               (x==3 && (y==2 || y==7)) || (x==4 && (y==2 || y==7)) || (x==5 && (y==2 || y==7));
     }
 }

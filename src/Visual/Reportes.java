@@ -10,7 +10,7 @@ package Visual;
  * @author Leovavi
  */
 public class Reportes extends javax.swing.JPanel {
-
+    Logs logs = new Logs();
     /**
      * Creates new form Reportes
      */
@@ -71,13 +71,14 @@ public class Reportes extends javax.swing.JPanel {
     }//GEN-LAST:event_btnBackActionPerformed
 
     private void btnRankingActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRankingActionPerformed
-        Menu.menu.showMessage("PROXIMAMENTE ESTARA DISPONIBLE");
-        //Menu.menu.setPanel(new Ranking());
+        Menu.menu.setPanel(new Ranking());
     }//GEN-LAST:event_btnRankingActionPerformed
 
     private void btnLogsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLogsActionPerformed
-        Menu.menu.showMessage("PROXIMAMENTE ESTARA DISPONIBLE");
-        //Menu.menu.setPanel(new Logs());
+        if(!logs.dlm.isEmpty())
+            Menu.menu.setPanel(new Logs());
+        else
+            Menu.menu.showMessage("No Logs Available");
     }//GEN-LAST:event_btnLogsActionPerformed
 
 

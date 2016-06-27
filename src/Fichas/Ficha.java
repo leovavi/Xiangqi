@@ -1,23 +1,31 @@
 package Fichas;
 
-public abstract class Ficha {
-    int turno;
+import javax.swing.JLabel;
+
+public abstract class Ficha extends JLabel implements Fortressable{
+    public String color;
+    public int turno;
     String name;
     
-    public Ficha(String name){
-        turno = 1;
+    public Ficha(String name, int turno){
+        super();
         this.name = name;
+        this.turno = turno;
+        color = (turno == 1 ? "R" : "B");
     }
     
-    public String getName(){
+    public final String getFichaName(){
         return name;
     }
     
-    public int getTurno(){
+    public final int getTurno(){
         return turno;
     }
     
-    public abstract void move();
-    public abstract boolean validarMove();
+    public final String getColor(){
+        return color;
+    }
+    
+    public abstract boolean validarMove(int x, int y, int x1, int y1);
     public abstract String icon();
 }

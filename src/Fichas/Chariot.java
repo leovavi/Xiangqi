@@ -9,25 +9,25 @@ package Fichas;
  *
  * @author Leovavi
  */
-public class Chariot extends Ficha{
-    public Chariot(String name){
-        super(name);
+public final class Chariot extends Ficha{
+    public Chariot(String name, int turno){
+        super(name, turno);
     }
     
     @Override
-    public void move() {
-
-    }
-
-    @Override
-    public boolean validarMove() {
-        return true;
+    public boolean validarMove(int x, int y, int x1, int y1) {
+        return (y==y1 && (x>x1 || x<x1)) || (x==x1 && (y>y1 || y<y1));
     }
 
     @Override
     public String icon() {
-        if(turno == 1)
-            return "/Imagenes/Fichas/ChariotR.png";
-        return "/Imagenes/Fichas/ChariotB.png";
+        return "src/Imagenes/Fichas/Chariot"+getColor()+".png";
+    }
+    
+    @Override
+    public boolean insideFort(int x, int y){            
+        return (x==3 && (y==0 || y==9)) || (x==4 && (y==0 || y==9)) || (x==5 && (y==0 || y==9)) ||
+               (x==3 && (y==1 || y==8)) || (x==4 && (y==1 || y==8)) || (x==5 && (y==1 || y==8)) ||
+               (x==3 && (y==2 || y==7)) || (x==4 && (y==2 || y==7)) || (x==5 && (y==2 || y==7));
     }
 }

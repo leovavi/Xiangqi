@@ -77,7 +77,7 @@ public class MenuPrincipal extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnLogOutActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLogOutActionPerformed
-        Menu.menu.userLogged = null;
+        Menu.userLogged = null;
         Menu.menu.setPanel(new MenuInicio());
     }//GEN-LAST:event_btnLogOutActionPerformed
 

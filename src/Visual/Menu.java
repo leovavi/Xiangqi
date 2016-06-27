@@ -1,7 +1,6 @@
 package Visual;
 
-import Xiangqi.Login;
-import Xiangqi.UserList;
+import Xiangqi.Xiangqi;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
@@ -9,8 +8,9 @@ import javax.swing.JPanel;
 
 public class Menu extends JFrame {
     public static Menu menu = new Menu();
-    static UserList ul = new UserList();
-    static Login userLogged, userLogged2;
+    public static Xiangqi xia = new Xiangqi();
+    public static Tablero tablero;
+    public static String userLogged, userLogged2, path;
     
     /**
      * Creates new form Menu
